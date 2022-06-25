@@ -1,0 +1,7 @@
+*/.terraform**
+**/terraform.tfstate.backup
+**/terraform.tfstate
+**/cloud_config.yaml
+tf_create_infrasturcture/backend.sh
+tf_create_infrasturcture/secrets/*
+**/backend.tf

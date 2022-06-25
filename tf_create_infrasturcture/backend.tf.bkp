@@ -1,0 +1,12 @@
+terraform {
+  backend "s3" {
+  endpoint   = "storage.yandexcloud.net"
+  bucket     = "bucket-diploma-dotsenkois"
+  region     = "ru-central1"
+  key        = "tf/dotsenkois-diploma.tfstate"
+  access_key = 
+  secret_key = 
+  skip_region_validation      = true
+  skip_credentials_validation = true
+}
+}
