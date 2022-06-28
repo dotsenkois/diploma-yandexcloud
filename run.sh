@@ -41,9 +41,9 @@ function check_yc() {
   fi
 }
 
-function create_folders() {
+function create_buket_folder() {
 
-  for folder in "${folders[@]}"
+  for buket_folder in "${buket_folders[@]}"
   do
     # Настройка YC
     # Создать каталог
@@ -62,11 +62,32 @@ function create_folders() {
 
 }
 
+
+function create_workspaces_folders() {
+
+  for workspace in "${workspaces[@]}"
+  do
+    # Настройка YC
+    # Создать каталог
+    check_folder=''
+    check_folder=$(yc resource-manager folder get --name=$workspace 2>/dev/null)
+    id=${check_folder:4:20}
+    if [ "$id" == "" ]; then
+      yc resource-manager folder create \
+      --name=$workspace \
+      --description="Каталог для дипломного проекта по теме 'Дипломный практикум в Яндекс.Облако' студента Доценко Илья Сергеевич" 2>/dev/null
+      check_folder=$(yc resource-manager folder get --name=$workspace &>/dev/null)
+      id=${check_folder:4:20}
+    fi
+    echo -n "$id"> ./yc_folders/$workspace
+  done
+
+}
+
 function create_workspaces() {
   cd ./tf_cloud_prepare && terraform apply --auto-approve
   cd ../tf_create_infrasturcture && terraform init
 
-  workspaces=(prod stage)
   for workspace in "${workspaces[@]}"
   do
     check=$(terraform workspace list| grep $workspace)
@@ -75,6 +96,11 @@ function create_workspaces() {
     fi
     check=""
   done
+}
+function prepare_kuberspray() {
+  if [ ! -f ./kuberspray ]; then
+    git clone
+  fi
 }
 
 function main() {
@@ -91,6 +117,8 @@ yc config set token $token
 yc config set cloud-id $cloud_id
 
 # переменные для создание ресурсов
-folders=("bucket" "stage" "prod")
+workspaces=(prod stage)
+buket_folders=(bucket)
+
 
 check_params
