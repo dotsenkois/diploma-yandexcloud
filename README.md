@@ -20,6 +20,13 @@ devops-netology/13-kubernetes-config-02-mounts/ansible/roles
 inventory/sample/group_vars/k8s_cluster/addons.yml
 helm_enabled: false
 
+Helm Completion Bash
+source <(helm completion bash)
+helm completion bash > /etc/bash_completion.d/helm
+
+Error while proxying request: x509: certificate is valid for 10.233.0.1, 10.130.0.20, 127.0.0.1, not 51.250.44.19
+https://programmersought.com/article/10445722801/
+
 настройка хранилища NFS
 https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner
 
