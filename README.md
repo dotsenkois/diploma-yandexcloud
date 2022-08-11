@@ -45,3 +45,12 @@ $ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/n
 # prod
 
 БД должна находиться на отдельной машине.
+
+Стараться не использовать PVC. Использовать для хранения s3. Или nfs
+Использовать для бд отделюную машину
+НА всеъ ВМ линукс отключить своп и возможность записи дампа ядра
+
+Кластеризация бесплатной версии vault чепез COnsul 
+https://gitlab.com/k11s-os/k8s-lessons
+
+Для использованиея nfs профвайдеров необходимо установить пакет apt-get install -y nfs-common
