@@ -54,3 +54,8 @@ $ helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/n
 https://gitlab.com/k11s-os/k8s-lessons
 
 Для использованиея nfs профвайдеров необходимо установить пакет apt-get install -y nfs-common
+
+
+alias k=kubectl
+source <( kubectl completion bash | sed s/kubectl/k/g )
+alias ksc="kubectl config set-context --current --namespace "
