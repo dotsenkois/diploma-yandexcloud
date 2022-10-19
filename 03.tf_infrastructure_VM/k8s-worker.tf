@@ -21,7 +21,7 @@ resource "yandex_compute_instance" "worker" {
     }
   }
   metadata = {
-    ssh-keys = "dotsenkois:${file("~/.ssh/id_rsa.pub")}"
+    user-data = file("${path.module}/cloud_config.yaml")
   }
   scheduling_policy {
     preemptible = local.workspaces[terraform.workspace].wn_scheduling_policy.preemptible

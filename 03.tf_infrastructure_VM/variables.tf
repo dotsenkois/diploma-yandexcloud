@@ -52,7 +52,7 @@ variable "yc_image_id" {
 
 variable "HostsPath" {
   type    = string
-  default = "../../../kubespray/inventory/mycluster/inventory.yml" #"../playbook/inventory/prod/hosts.yml"
+  default = "../99.kubespray/inventory/netology/inventory.yml" #"../playbook/inventory/prod/hosts.yml"
 
 }
 

@@ -1,34 +1,34 @@
-resource "yandex_compute_instance" "control_plane" {
+resource "yandex_compute_instance" "etcd" {
 
-  name        = format("k8s-control-plane-node-%03d", count.index + 1)
+  name        = format("k8s-etcd-node-%03d", count.index + 1)
   # platform_id = var.yc_instances_control-plane
-  hostname    = format("k8s-control-plane-node-%03d", count.index + 1)
+  hostname    = format("k8s-etcd-node-%03d", count.index + 1)
   description = "CP node for diplom demonstration"
-  count       = local.workspaces[terraform.workspace].K8s_cpn_count
+  count       = local.workspaces[terraform.workspace].K8s_etcd_count
   allow_stopping_for_update = true
 
 
   resources {
-    cores         = local.workspaces[terraform.workspace].cpn_resources.cores
-    memory        = local.workspaces[terraform.workspace].cpn_resources.memory
-    core_fraction = local.workspaces[terraform.workspace].cpn_resources.core_fraction
+    cores         = local.workspaces[terraform.workspace].etcd_resources.cores
+    memory        = local.workspaces[terraform.workspace].etcd_resources.memory
+    core_fraction = local.workspaces[terraform.workspace].etcd_resources.core_fraction
   }
   boot_disk {
     initialize_params {
-      image_id = local.workspaces[terraform.workspace].cpn_boot_disk.image_id
-      type     = local.workspaces[terraform.workspace].cpn_boot_disk.type
-      size     = local.workspaces[terraform.workspace].cpn_boot_disk.size
+      image_id = local.workspaces[terraform.workspace].etcd_boot_disk.image_id
+      type     = local.workspaces[terraform.workspace].etcd_boot_disk.type
+      size     = local.workspaces[terraform.workspace].etcd_boot_disk.size
     }
   }
   metadata = {
-    ssh-keys = "dotsenkois:${file("~/.ssh/id_rsa.pub")}"
+    user-data = file("${path.module}/cloud_config.yaml")
   }
   scheduling_policy {
-    preemptible = local.workspaces[terraform.workspace].cpn_scheduling_policy.preemptible
+    preemptible = local.workspaces[terraform.workspace].etcd_scheduling_policy.preemptible
   }
   network_interface {
     subnet_id = yandex_vpc_subnet.k8s-subnet-a.id
-    ip_address = format("10.130.0.%d", count.index + 20)
+    ip_address = format("10.130.0.%d", count.index + 40)
     nat       = "true"
   }
 }

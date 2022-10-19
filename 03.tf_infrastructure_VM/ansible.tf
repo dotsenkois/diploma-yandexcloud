@@ -11,7 +11,7 @@ resource "null_resource" "wait" {
 resource "null_resource" "roles" {
   provisioner "local-exec" {
     # command = "ansible-galaxy role install -r ../playbook/requirements.yml -f && ANSIBLE_FORCE_COLOR=1 ansible-playbook -i ../playbook/inventory/prod/hosts.yml ../playbook/site.yml"
-    command = "ANSIBLE_FORCE_COLOR=1 ansible-playbook -i ../../../kubespray/inventory/mycluster/inventory.yml --become --become-user=root ../../../kubespray/cluster.yml"
+    command = "ANSIBLE_FORCE_COLOR=1 ansible-playbook -i ../99.kubespray/inventory/netology/inventory.yml --become --become-user=root ../99.kubespray/cluster.yml"
   }
 
   depends_on = [

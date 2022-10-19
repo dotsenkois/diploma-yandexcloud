@@ -63,9 +63,9 @@ function create_buket_folder() {
     fi
     pwd
     echo "ID каталога для bucket $id"
-    touch ./yc_folders/$buket_folder
-    echo -n "$id"> ./yc_folders/$buket_folder
-    sed -i "s/buket_folder_id.*/buket_folder_id = \"$id\"/" ./tf_cloud_prepare/locals.tf 
+    # touch ./yc_folders/$buket_folder
+    echo -n "$id"> ./02.yc_folders/$buket_folder
+    sed -i "s/buket_folder_id.*/buket_folder_id = \"$id\"/" ./01.tf_cloud_prepare/locals.tf 
   done
 
 }
@@ -91,16 +91,19 @@ function create_workspaces_folders() {
       id=${check_folder:4:20}
     fi
     echo "ID каталога для $workspace $id"
-    touch ./yc_folders/$workspace
-    echo -n "$id"> ./yc_folders/$workspace
+    touch ./02.yc_folders/$workspace
+    echo -n "$id"> ./02.yc_folders/$workspace
   done
 
 }
 
 function create_workspaces() {
-  cd ./tf_cloud_prepare && terraform init && terraform apply --auto-approve
-  cd ../tf_create_infrasturcture && terraform init
-  
+  cd ./01.tf_cloud_prepare && terraform init && terraform apply --auto-approve
+  if [[ $k8s == 1 ]]; then
+  cd ../03.tf_infrastructure && terraform init
+  else
+  cd ../04.tf_infrastructure && terraform init
+  fi
 
   for workspace in "${workspaces[@]}"
   do
@@ -122,20 +125,40 @@ function prepare_kuberspray() {
 }
 
 function start_main_terrafrom() {
-  sleep 30
+  # sleep 30
   rm terraform.tfstate*
-  terraform workspace select $(ls ../yc_folders/stage* --sort=time |xargs -n 1 basename|head -n 1)
+  terraform workspace select $(ls ../02.yc_folders/stage* --sort=time |xargs -n 1 basename|head -n 1)
   terraform apply --auto-approve
 
 }
 
 function main() {
+  k8s_choiсe
   check_yc
   create_buket_folder
   create_workspaces_folders
   create_workspaces
-  
 }
+
+function k8s_choiсe() {
+
+k8s_variants=(1 2)
+cat << EOF
+Васи приветсвтует программа первоначальной настройки 
+
+Выберите вариант развертываения кластера kubernetes
+1 - compute cloud
+2 - Yandex Managed Service for Kubernetes(*)
+EOF
+
+read k8s
+if [[ ! " ${k8s_variants[*]} " =~ " ${k8s} " ]]; 
+then
+k8s=2
+fi
+}
+
+
 
 # настраиваем утилиту yc
 yc config set token $YC_TOKEN

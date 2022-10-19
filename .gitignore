@@ -5,3 +5,4 @@
 tf_create_infrasturcture/backend.sh
 tf_create_infrasturcture/secrets/*
 **/backend.tf
+**/99.tf_create_infrasturcture/secrets/*

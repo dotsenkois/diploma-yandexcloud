@@ -25,29 +25,33 @@ resource "yandex_storage_bucket" "dotsenkois-diploma" {
   bucket = "bucket-diploma-dotsenkois"
 }
 
-resource "local_file" "access_key" {
-  filename = "../tf_create_infrasturcture/secrets/access_key"
-  content  = <<-EOT
-  ${yandex_iam_service_account_static_access_key.sa-static-key.access_key}
-EOT
-}
-
-resource "local_file" "secret_key" {
-  filename = "../tf_create_infrasturcture/secrets/secret_key"
-  content  = <<-EOT
-  ${yandex_iam_service_account_static_access_key.sa-static-key.secret_key}
-EOT
-}
-
-resource "local_file" "backend" {
-  filename = "../tf_create_infrasturcture/backend.tf"
+resource "local_file" "backend-1" {
+  filename = "../04.tf_infrastructure_k8s_managed/backend.tf"
   content  = <<-EOT
 terraform {
   backend "s3" {
   endpoint   = "storage.yandexcloud.net"
   bucket     = "${yandex_storage_bucket.dotsenkois-diploma.bucket}"
   region     = "ru-central1"
-  key        = "tf/dotsenkois-diploma.tfstate"
+  key        = "tf/dotsenkois-diploma-v2.tfstate"
+  access_key = "${yandex_iam_service_account_static_access_key.sa-static-key.access_key}"
+  secret_key = "${yandex_iam_service_account_static_access_key.sa-static-key.secret_key}"
+  skip_region_validation      = true
+  skip_credentials_validation = true
+  }
+}
+EOT
+}
+
+resource "local_file" "backend-2" {
+  filename = "../03.tf_infrastructure_VM/backend.tf"
+  content  = <<-EOT
+terraform {
+  backend "s3" {
+  endpoint   = "storage.yandexcloud.net"
+  bucket     = "${yandex_storage_bucket.dotsenkois-diploma.bucket}"
+  region     = "ru-central1"
+  key        = "tf/dotsenkois-diploma-v1.tfstate"
   access_key = "${yandex_iam_service_account_static_access_key.sa-static-key.access_key}"
   secret_key = "${yandex_iam_service_account_static_access_key.sa-static-key.secret_key}"
   skip_region_validation      = true
