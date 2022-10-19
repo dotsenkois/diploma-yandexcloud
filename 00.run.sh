@@ -1,31 +1,33 @@
 #!/bin/bash
-
+set -x
 function terraform_reinit() {
-# Удалить старое
-# rm -rf ./tf_cloud_prepare/.terraform*
-# rm ./tf_cloud_prepare/folder_id ./tf_cloud_prepare/terraform*
-echo
+  terraform init
 }
 
+# Проверяем ключи, с котрым запущен скрипт
 function check_params() {
   echo $# 
   echo $1
   echo $0
  
+#  Если ключей нет, то выполняем функцию "main"
   if [ $# -eq 0 ]; then
     main
-  else
+    # Иначе проверяем наличе ключа "help"
+  else 
     if [[ "$@" =~ "--help" || "$@" =~ "-h" ]]; then
     help
     fi
   fi
 }
+# Функция справки. Не написано
 function help() {
   echo "this is help"
 }
 
+# Проверка наличия утилиты yc
 function check_yc() {
-  # проверка наличия утилиты yc
+
   echo "Проверка установки утилиты yc"
   if [ ! -f /home/$USER/yandex-cloud/bin/yc ]; then
       echo "устанавливаю утилиту YC"
@@ -41,37 +43,46 @@ function check_yc() {
   fi
 }
 
+# Создание каталога в облаке для объектного хранилища 
 function create_buket_folder() {
-
+  # Передираем все 
   for buket_folder in "${buket_folders[@]}"
   do
     # Настройка YC
     # Создать каталог
+    echo "Проверяю наличие каталог для bucket"
     check_folder=''
-    check_folder=$(yc resource-manager folder get --name=$folder 2>/dev/null)
+    check_folder=$(yc resource-manager folder get --name=$buket_folder 2>/dev/null)
     id=${check_folder:4:20}
     if [ "$id" == "" ]; then
       yc resource-manager folder create \
-      --name=$folder \
+      --name=$buket_folder \
       --description="Каталог для дипломного проекта по теме 'Дипломный практикум в Яндекс.Облако' студента Доценко Илья Сергеевич" 2>/dev/null
-      check_folder=$(yc resource-manager folder get --name=$folder &>/dev/null)
+      check_folder=$(yc resource-manager folder get --name=$buket_folder &>/dev/null )
       id=${check_folder:4:20}
     fi
-    echo -n "$id"> ./yc_folders/$folder
+    pwd
+    echo "ID каталога для bucket $id"
+    touch ./yc_folders/$buket_folder
+    echo -n "$id"> ./yc_folders/$buket_folder
+    sed -i "s/buket_folder_id.*/buket_folder_id = \"$id\"/" ./tf_cloud_prepare/locals.tf 
   done
 
 }
 
-
+# создание terrafrom workspaces и каталогов в облаке для указанных окружений
 function create_workspaces_folders() {
-
+# Перебираем масиив с именами окружений
   for workspace in "${workspaces[@]}"
   do
     # Настройка YC
     # Создать каталог
-    check_folder=''
+    
+    check_folder='' # ЧТО ЭТО, БЛЯДЬ?
     check_folder=$(yc resource-manager folder get --name=$workspace 2>/dev/null)
+    #
     id=${check_folder:4:20}
+    # echo $id
     if [ "$id" == "" ]; then
       yc resource-manager folder create \
       --name=$workspace \
@@ -79,14 +90,17 @@ function create_workspaces_folders() {
       check_folder=$(yc resource-manager folder get --name=$workspace &>/dev/null)
       id=${check_folder:4:20}
     fi
+    echo "ID каталога для $workspace $id"
+    touch ./yc_folders/$workspace
     echo -n "$id"> ./yc_folders/$workspace
   done
 
 }
 
 function create_workspaces() {
-  cd ./tf_cloud_prepare && terraform apply --auto-approve
+  cd ./tf_cloud_prepare && terraform init && terraform apply --auto-approve
   cd ../tf_create_infrasturcture && terraform init
+  
 
   for workspace in "${workspaces[@]}"
   do
@@ -96,29 +110,40 @@ function create_workspaces() {
     fi
     check=""
   done
+
+  start_main_terrafrom
 }
+
+
 function prepare_kuberspray() {
   if [ ! -f ./kuberspray ]; then
     git clone
   fi
 }
 
-function main() {
-  check_yc
-  create_folders
-  create_workspaces
+function start_main_terrafrom() {
+  sleep 30
+  rm terraform.tfstate*
+  terraform workspace select $(ls ../yc_folders/stage* --sort=time |xargs -n 1 basename|head -n 1)
+  terraform apply --auto-approve
+
 }
 
-# переменные для подключения
-token=$YC_TOKEN
-cloud_id=$YC_CLOUD_ID
+function main() {
+  check_yc
+  create_buket_folder
+  create_workspaces_folders
+  create_workspaces
+  
+}
 
-yc config set token $token
-yc config set cloud-id $cloud_id
+# настраиваем утилиту yc
+yc config set token $YC_TOKEN
+yc config set cloud-id $YC_CLOUD_ID
 
 # переменные для создание ресурсов
-workspaces=(prod stage)
-buket_folders=(bucket)
+workspaces=(prod stage) # Название  рабочих пространств и основных каталогов облака
+buket_folders=(bucket) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
 
 
 check_params

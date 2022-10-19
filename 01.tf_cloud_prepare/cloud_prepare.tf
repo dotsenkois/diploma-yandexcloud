@@ -1,16 +1,13 @@
-locals {
-  folder_id = file("../yc_folders/bucket")
-}
 
 // Create SA
 resource "yandex_iam_service_account" "sa" {
-  folder_id = local.folder_id
+  folder_id = local.buket_folder_id
   name      = "sa-diploma-dotsenkois"
 }
 
 // Grant permissions
 resource "yandex_resourcemanager_folder_iam_member" "sa-editor" {
-  folder_id = local.folder_id
+  folder_id = local.buket_folder_id
   role      = "storage.editor"
   member    = "serviceAccount:${yandex_iam_service_account.sa.id}"
 }
@@ -51,8 +48,8 @@ terraform {
   bucket     = "${yandex_storage_bucket.dotsenkois-diploma.bucket}"
   region     = "ru-central1"
   key        = "tf/dotsenkois-diploma.tfstate"
-  access_key = file("./secrets/access_key")
-  secret_key = file("./secrets/secret_key")
+  access_key = "${yandex_iam_service_account_static_access_key.sa-static-key.access_key}"
+  secret_key = "${yandex_iam_service_account_static_access_key.sa-static-key.secret_key}"
   skip_region_validation      = true
   skip_credentials_validation = true
   }

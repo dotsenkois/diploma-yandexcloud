@@ -1,4 +1,3 @@
-
 resource "yandex_compute_instance" "control_plane" {
 
   name        = format("k8s-control-plane-node-%03d", count.index + 1)
@@ -6,6 +5,7 @@ resource "yandex_compute_instance" "control_plane" {
   hostname    = format("k8s-control-plane-node-%03d", count.index + 1)
   description = "CP node for diplom demonstration"
   count       = local.workspaces[terraform.workspace].K8s_cpn_count
+  allow_stopping_for_update = true
 
 
   resources {
