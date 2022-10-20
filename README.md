@@ -15,6 +15,8 @@
 
 
 # Пометки
+https://cloud.yandex.ru/docs/managed-gitlab/quickstart
+https://cloud.yandex.ru/docs/managed-kubernetes/operations/connect/create-static-conf
 
 В данном репозитории представлен вариант равзертываения инфраструктуры благодаря облачному провайдеру яндес.облако.
 

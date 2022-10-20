@@ -3,7 +3,10 @@ resource "yandex_compute_instance" "nat" {
   hostname = "nat"
   platform_id = "standard-v1"
   zone        = "ru-central1-a"
+  allow_stopping_for_update = true
 
+
+  
   resources {
     cores  = 2
     memory = 2
@@ -16,7 +19,8 @@ resource "yandex_compute_instance" "nat" {
   }
 
   network_interface {
-    subnet_id = yandex_vpc_subnet.k8s-private-zone-a.id
+    subnet_id = yandex_vpc_subnet.nat-snet.id
+    ip_address = "192.168.40.11"
     nat       = true
   }
 
@@ -36,5 +40,21 @@ resource "yandex_vpc_route_table" "lab-rt-a" {
     destination_prefix = "0.0.0.0/0"
     next_hop_address   = yandex_compute_instance.nat.network_interface.0.ip_address
   }
+}
+
+resource "null_resource" "wait" {
+  provisioner "local-exec" {
+    command = "sleep 30"
+  }
+}
+
+resource "null_resource" "copy_rsa" {
+  provisioner "local-exec" {
+    command = "scp ~/.ssh/id_rsa dotsenkois@${yandex_compute_instance.nat.network_interface.0.nat_ip_address}:~/.ssh/"
+  }
+
+  depends_on = [
+    null_resource.wait
+  ]
 }
 
