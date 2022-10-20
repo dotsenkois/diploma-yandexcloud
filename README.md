@@ -74,4 +74,4 @@ https://gitlab.com/k11s-os/k8s-lessons
 
 alias k=kubectl
 source <( kubectl completion bash | sed s/kubectl/k/g )
-alias ksc="kubectl config set-context --current --namespace "
+alias ksc="kubectl config set-context --current --namespace "****

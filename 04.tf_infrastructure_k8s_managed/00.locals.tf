@@ -2,67 +2,57 @@ locals {
     workspaces = {
         stage = {
             folder_id =  file("../02.yc_folders/stage")
-            K8s_cpn_count = 1
-            K8s_wn_count = 2
-            cpn_resources = {
-                cores         = "10"
-                memory        = "6"
-                core_fraction = "100"
-            }
-            cpn_boot_disk = {
-                image_id = "fd8f1tik9a7ap9ik2dg1"
-                type     = "network-ssd"
-                size     = "20"
-            }
-            cpn_scheduling_policy = {
-                preemptible = "true"
-            }
+            scale_policy = {
+                auto_scale ={
+                    min     = 3
+                    max     = 6
+                    initial = 3
+                }
+                }
+            #db
+            db_nodes_count = 1
 
-            wn_resources ={
+            db_resources = {
                 cores         = "10"
-                memory        = "6"
-                core_fraction = "100"
-            }
-            wn_boot_disk = {
-                image_id = "fd8f1tik9a7ap9ik2dg1"
-                type     = "network-ssd"
-                size     = "40"
-            }
-            wn_scheduling_policy = {
-                preemptible = "true"
-            }
-        }
-        prod = {
-            folder_id =  file("../02.yc_folders/prod")
-            K8s_cpn_count = 3
-            K8s_wn_count = 4
-            cpn_resources = {
-                cores         = "20"
-                memory        = "6"
-                core_fraction = "100"
-            }
-            cpn_boot_disk = {
-                image_id = "fd8f1tik9a7ap9ik2dg1"
-                type     = "network-ssd"
-                size     = "30"
-            }
-            cpn_scheduling_policy = {
-                preemptible = "false"
-            }
-
-            wn_resources = {
-                cores         = "20"
                 memory        = "10"
                 core_fraction = "100"
             }
-            wn_boot_disk = {
+            db_boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"
                 type     = "network-ssd"
                 size     = "50"
             }
-            wn_scheduling_policy = {
-                preemptible = "false"
+            db_scheduling_policy = {
+                preemptible = "true"
             }
-        }
+
+        prod = {
+            folder_id =  file("../02.yc_folders/prod")
+            scale_policy = {
+                auto_scale ={
+                    min     = 5
+                    max     = 10
+                    initial = 5
+                }
+                }
+            }
+            #db
+            db_nodes_count = 2
+
+
+            db_resources = {
+                cores         = "10"
+                memory        = "10"
+                core_fraction = "100"
+            }
+            db_boot_disk = {
+                image_id = "fd8f1tik9a7ap9ik2dg1"
+                type     = "network-ssd"
+                size     = "50"
+            }
+            db_scheduling_policy = {
+                preemptible = "true"
+            } 
     }
-}
+    }
+    }

@@ -4,7 +4,7 @@ variable "yc_zone" {
   default = "ru-central1-a"
 }
 
-variable "yc_folder_id" {
+variable "HostsPath" {
   type    = string
-  default = "b1gpq8dv1c78c0nrm0h9"
+  default = "../05.ansible-db/inventory/inventory.yml"
 }

@@ -10,7 +10,7 @@ resource "yandex_kubernetes_node_group" "k8s-netology-node-group" {
   
     instance_template {
         boot_disk {
-            type = "network-hdd"
+            type = "network-ssd"
             size = 64
         }
         platform_id = "standard-v2"
@@ -21,12 +21,12 @@ resource "yandex_kubernetes_node_group" "k8s-netology-node-group" {
 }
   scale_policy {
     auto_scale {
-      min     = 3
-      max     = 6
-      initial = 3
+      min     = local.workspaces[terraform.workspace].scale_policy.auto_scale.min
+      max     = local.workspaces[terraform.workspace].scale_policy.auto_scale.max
+      initial = local.workspaces[terraform.workspace].scale_policy.auto_scale.initial
     }
   }
-  scheduling_policy {
-      preemptible = true
-    }
+  # scheduling_policy {
+  #     preemptible = true
+  #   }
 }
