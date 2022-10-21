@@ -40,14 +40,14 @@ resource "null_resource" "wait" {
   }
 }
 
-resource "null_resource" "copy_rsa" {
-  provisioner "local-exec" {
-    command = "scp ~/.ssh/id_rsa dotsenkois@${yandex_compute_instance.nat.network_interface.0.nat_ip_address}:~/.ssh/"
+# resource "null_resource" "copy_rsa" {
+#   provisioner "local-exec" {
+#     command = "scp ~/.ssh/id_rsa dotsenkois@${yandex_compute_instance.nat.network_interface.0.nat_ip_address}:~/.ssh/"
 
-  }
+#   }
 
-  depends_on = [
-    null_resource.wait
-  ]
-}
+#   depends_on = [
+#     null_resource.wait
+#   ]
+# }
 

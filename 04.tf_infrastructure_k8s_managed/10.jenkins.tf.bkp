@@ -5,11 +5,9 @@ resource "yandex_compute_instance" "jenkins" {
   zone        = "ru-central1-a"
   allow_stopping_for_update = true
 
-
-  
   resources {
     cores  = 2
-    memory = 2
+    memory = 8
   }
 
   boot_disk {
@@ -29,9 +27,21 @@ resource "yandex_compute_instance" "jenkins" {
   }
 
   scheduling_policy {
-    preemptible = "true"
+    preemptible = "false"
   }
 }
 
+# resource "null_resource" "wait-jenkins" {
+#   provisioner "local-exec" {
+#     command = "sleep 50"
+#   }
+# }
 
-
+# resource "null_resource" "copy_jenkins_password" {
+#   provisioner "local-exec" {
+#     command = "scp dotsenkois@${yandex_compute_instance.jenkins.network_interface.0.nat_ip_address}:/var/lib/jenkins/secrets/initialAdminPassword ../11.jenkins/initialAdminPassword"
+#   }
+#   depends_on = [
+#     null_resource.wait-jenkins
+#   ]
+# }

@@ -1,7 +1,7 @@
 
 resource "null_resource" "kubeconfig" {
   provisioner "local-exec" {
-    command = "yc managed-kubernetes cluster get-credentials ${yandex_kubernetes_cluster.k8s-netology.id} --external --force"
+    command = "CLUSTER_ID=${yandex_kubernetes_cluster.k8s-netology.id} && ../.kuber/add_cluster.sh"
   }
 
   depends_on = [
