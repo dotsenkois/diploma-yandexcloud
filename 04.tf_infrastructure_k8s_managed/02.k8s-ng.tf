@@ -11,7 +11,7 @@ resource "yandex_kubernetes_node_group" "k8s-netology-node-group" {
     instance_template {
         boot_disk {
             type = "network-ssd"
-            size = 64
+            size = 30
         }
         platform_id = "standard-v2"
     network_interface {

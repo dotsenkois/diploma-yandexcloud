@@ -33,24 +33,17 @@ resource "yandex_compute_instance" "nat" {
   }
 }
 
-resource "yandex_vpc_route_table" "lab-rt-a" {
-  name       = "route-table"
-  network_id = yandex_vpc_network.k8s-network.id  
-  static_route {
-    destination_prefix = "0.0.0.0/0"
-    next_hop_address   = yandex_compute_instance.nat.network_interface.0.ip_address
-  }
-}
 
 resource "null_resource" "wait" {
   provisioner "local-exec" {
-    command = "sleep 30"
+    command = "sleep 50"
   }
 }
 
 resource "null_resource" "copy_rsa" {
   provisioner "local-exec" {
     command = "scp ~/.ssh/id_rsa dotsenkois@${yandex_compute_instance.nat.network_interface.0.nat_ip_address}:~/.ssh/"
+
   }
 
   depends_on = [

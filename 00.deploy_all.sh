@@ -63,14 +63,17 @@ function 01.tf_cloud_prepare(){
   cd ./01.tf_cloud_prepare && terraform init && terraform apply --auto-approve
 }
 
-function 03.tf_infrastructure{
-if [[ $k8s == 1 ]]; then
-cd ../03.tf_infrastructure_VM
-else
+function 03.tf_infrastructure(){
+# k8s=2
+# if [[ $k8s == 1 ]]; then
+# cd ../03.tf_infrastructure_VM
+# else
 cd ../04.tf_infrastructure_k8s_managed
-fi
+# fi
+echo "Начинаю развертывание основной инфраструктуры"
+pwd
 
-terraform init
+terraform init -reconfigure
 
 for workspace in "${workspaces[@]}"
   do
@@ -81,10 +84,12 @@ for workspace in "${workspaces[@]}"
     check=""
 done    
 
-  terraform workspace select $(ls ../02.yc_folders/stage* --sort=time |xargs -n 1 basename|head -n 1)
+terraform workspace select $(ls ../02.yc_folders/stage* --sort=time |xargs -n 1 basename|head -n 1)
 
 terraform apply --auto-approve
+
 }
+
 function main(){
 
 # настраиваем утилиту yc
