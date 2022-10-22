@@ -1,0 +1,104 @@
+/*profile*/
+.content{
+    padding-left: 9%;
+    padding-right: 9%;
+}
+
+/*Карточка*/
+/*.card{*/
+/*    !*width: 290px;*!*/
+/*    width: max-content;*/
+/*    height: auto;*/
+/*}*/
+
+/*.col{*/
+/*    position: relative;*/
+/*}*/
+
+.col{
+    width: auto;
+    height: auto;
+}
+
+#card-info{
+    padding-left: 1%;
+    padding-right: 1%;
+    height: max-content;
+}
+
+/*.card-body{*/
+/*    padding-top: initial;*/
+/*}*/
+
+/*Надпись прошлые записи*/
+.previous-cards{
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table{
+    text-align: left;
+    font-size: 16px;
+    border-collapse: separate;
+}
+.table td{
+    height: 10px;
+}
+
+.table th {
+    font-size: 15px;
+}
+div #change-delete {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div ul{
+    margin: 0;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+/*Инфа*/
+.info-container{
+    padding-top: 5px;
+    padding-left: 20%;
+    padding-right: 20%;
+    justify-content: space-between;
+    display: flex;
+    border-bottom: 2px solid #DCDCDC;
+}
+
+/*Кнопки*/
+.button-container{
+    padding-bottom: 5px;
+    justify-content: center;
+    display: flex;
+    border-bottom: 2px solid #DCDCDC;
+}
+
+.nav-button{
+    padding-left: 10px;
+}
+
+/*Дата в карточке*/
+.card-header h4{
+    font-size: 23px;
+}
+
+/*Пагинация*/
+.pgn {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+/*Последняя запись*/
+div #last_entry{
+    margin-left: auto;
+    margin-right: auto;
+    /*width: 40%;*/
+    width: max-content;
+    height: auto;
+}

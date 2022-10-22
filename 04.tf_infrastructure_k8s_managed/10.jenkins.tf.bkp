@@ -27,7 +27,7 @@ resource "yandex_compute_instance" "jenkins" {
   }
 
   scheduling_policy {
-    preemptible = "false"
+    preemptible = "true"
   }
 }
 

@@ -1,0 +1,63 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Добавление{% endblock %}
+
+
+{% block content %}
+    <main>
+        <h1>Добавление записи</h1>
+        <form method="post">
+          {% csrf_token %}
+          <div class="all-form">
+              <div class="form-group">
+                <label for="id_date_start">Начало вахты</label>
+                <input type="date" name="date_start" required id="id_date_start" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="id_date_end">Конец вахты</label>
+                <input type="date" name="date_end" required id="id_date_end" class="form-control">
+              </div>
+          </div>
+          <div class="all-form">
+              <div class="form-group">
+                <label for="id_days_road">Дни в дороге</label>
+                <input type="number" step="1" name="days_road" required id="id_days_road" class="form-control" placeholder="Дни в дороге" value="{{ profile_data_last.days_road }}">
+              </div>
+              <div class="form-group">
+                  <label for="id_hourly_fee">Оплата в час</label>
+                  <input type="number" step="0.01" name="hourly_fee" required id="id_hourly_fee" class="form-control" placeholder="Оплата в час" value="{{ profile_data_last.hourly_fee|stringformat:".2f" }}">
+              </div>
+          </div>
+          <div class="all-form">
+              <div class="form-group">
+                <label for="id_district_coefficient">Районный коэффициент</label>
+                <input type="number" step="10" name="district_coefficient" required id="id_district_coefficient" class="form-control" placeholder="Районный коэффициент" value="{{ profile_data_last.district_coefficient }}">
+              </div>
+              <div class="form-group">
+                <label for="id_northern_coefficient">Северный коэффициент</label>
+                <input type="number" step="10" name="northern_coefficient" required id="id_northern_coefficient" class="form-control" placeholder="Северный коэффициент" value="{{ profile_data_last.northern_coefficient }}">
+              </div>
+          </div>
+          <div class="all-form">
+              <div class="form-group">
+                <label for="id_award">Премия</label>
+                <input type="number" step="10" name="award" required id="id_award" class="form-control" placeholder="Премия" value="{{ profile_data_last.award }}">
+              </div>
+              <div class="form-group">
+                <label for="id_extras">Доплата</label>
+                <input type="number" step="10" name="extras" required id="id_extras" class="form-control" placeholder="Доплата" value="{{ profile_data_last.extras }}">
+              </div>
+          </div>
+          <div class="all-form">
+              <div class="form-group">
+                <label for="id_observation">Обсервация</label>
+                <input type="number" name="observation" required id="id_observation" class="form-control" placeholder="Количество дней обсервации" value="{{ profile_data_last.observation }}">
+              </div>
+          </div>
+          <div class="error-btn">
+            <span>{{ error }}</span>
+            <button type="submit" class="btn btn-primary" id="btn-add">Добавить</button>
+          </div>
+        </form>
+    </main>
+{% endblock %}

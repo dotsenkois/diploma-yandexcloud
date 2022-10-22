@@ -1,0 +1,28 @@
+main{
+    padding-top: 10px;
+    font-size: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.all-form{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.all-form input{
+    width: 400px;
+    text-align: center;
+}
+
+.form-group label{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.error-btn{
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}

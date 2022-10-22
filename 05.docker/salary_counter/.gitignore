@@ -1,0 +1,7 @@
+.idea/
+__pycache__/
+db.sqlite3
+calculator/migrations
+calc.xlsx
+venv/
+Salary_counter/.env

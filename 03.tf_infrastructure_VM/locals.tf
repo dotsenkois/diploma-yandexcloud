@@ -23,9 +23,9 @@ locals {
             }
             # workers
             wn_resources ={
-                cores         = "10"
-                memory        = "10"
-                core_fraction = "100"
+                cores         = "2"
+                memory        = "4"
+                core_fraction = "20"
             }
             wn_boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"

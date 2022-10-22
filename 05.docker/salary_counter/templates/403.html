@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Доступ запрещен</title>
+    <link rel="stylesheet" href="{% static 'calculator/css/403.css' %}">
+</head>
+<body>
+
+    <div class="scene">
+      <div class="overlay"></div>
+      <div class="overlay"></div>
+      <div class="overlay"></div>
+      <div class="overlay"></div>
+      <span class="bg-403">403</span>
+      <div class="text">
+        <span class="hero-text"></span>
+        <span class="msg">Доступ для <span>не авторизированных</span> пользователей запрещен.</span>
+        <span class="support">
+          <span>Войти?</span>
+          <a href="{% url 'login' %}">Авторизация</a>
+        </span>
+      </div>
+      <div class="lock"></div>
+    </div>
+
+</body>
+</html>

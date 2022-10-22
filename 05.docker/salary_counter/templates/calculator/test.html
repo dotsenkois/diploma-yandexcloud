@@ -1,0 +1,12 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+
+     {% for k in last_entry %}
+           {% for kk, vv in k.items %}
+                {{ vv.calc_wage }}
+           {% endfor %}
+    {% endfor %}
+
+{% endblock %}
