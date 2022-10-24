@@ -1,0 +1,32 @@
+resource "local_file" "inventory-pg" {
+  filename = "../05.db/inventory/inventory.yml"
+  content  = <<-EOT
+---
+all:
+  hosts:
+    ${yandex_compute_instance.db.hostname}
+      ansible_host: ${node.network_interface.0.nat_ip_address}
+db:
+  children:
+    db
+      hosts:
+        ${yandex_compute_instance.db.hostname}
+
+  vars:
+    ansible_connection_type: paramiko
+    ansible_user: dotsenkois
+EOT
+
+  depends_on = [
+    yandex_compute_instance.db
+  ]
+}
+
+resource "null_resource" "run_ansible" {
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ../05.db/inventory/inventory.yml ../05.db/inventory/site.yml"
+  }
+    depends_on = [
+    local_file.inventory-pg
+  ]
+  }

@@ -26,7 +26,7 @@ resource "yandex_compute_instance" "docker" {
 
   metadata = {
     # ssh-keys = "dotsenkois:${file("~/.ssh/id_rsa.pub")}"
-    user-data = file("${path.module}/00.test-vm-cloud_config.yaml")
+    user-data = file("${path.module}/06.docker-instance-cloud_config.yaml")
 
   }
 

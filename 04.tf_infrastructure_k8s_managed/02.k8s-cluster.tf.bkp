@@ -1,0 +1,128 @@
+resource "yandex_kubernetes_cluster" "k8s-netology" {
+ network_id = yandex_vpc_network.k8s-network.id
+ name = "managed-kluster"
+
+  master {
+    version   = "1.21"
+    public_ip = true
+
+    regional {
+      region = "ru-central1"
+
+      location {
+        zone      = yandex_vpc_subnet.k8s-private-zone-a.zone
+        subnet_id = yandex_vpc_subnet.k8s-private-zone-a.id
+      }
+
+      location {
+        zone      = yandex_vpc_subnet.k8s-private-zone-b.zone
+        subnet_id = yandex_vpc_subnet.k8s-private-zone-b.id
+      }
+
+      location {
+        zone      = yandex_vpc_subnet.k8s-private-zone-c.zone
+        subnet_id = yandex_vpc_subnet.k8s-private-zone-c.id
+      }
+    }
+ }
+  # maintenance_policy  {
+  #     auto_upgrade = true
+
+  #     maintenance_window {
+  #       day        = "sunday"
+  #       start_time = "03:00"
+  #       duration   = "5h"
+  #     }
+    # }
+
+ service_account_id      = yandex_iam_service_account.k8s-sa.id
+ node_service_account_id = yandex_iam_service_account.k8s-sa.id
+
+
+kms_provider {
+    key_id = yandex_kms_symmetric_key.key-a.id
+  }
+
+  release_channel = "STABLE"
+}
+
+resource "yandex_vpc_subnet" "k8s-private-zone-a" {
+  v4_cidr_blocks = ["192.168.10.0/24"]
+  zone           = "ru-central1-a"
+  network_id =  yandex_vpc_network.k8s-network.id
+}
+
+resource "yandex_vpc_subnet" "k8s-private-zone-b" {
+  v4_cidr_blocks = ["192.168.11.0/24"]
+  zone           = "ru-central1-b"
+  network_id =  yandex_vpc_network.k8s-network.id
+}
+
+resource "yandex_vpc_subnet" "k8s-private-zone-c" {
+  v4_cidr_blocks = ["192.168.12.0/24"]
+  zone           = "ru-central1-c"
+  network_id =  yandex_vpc_network.k8s-network.id
+}
+
+resource "yandex_kubernetes_node_group" "k8s-netology-node-group" {
+    cluster_id = yandex_kubernetes_cluster.k8s-netology.id
+    version = "1.21"
+    
+    allocation_policy{
+        location{
+            zone = yandex_vpc_subnet.k8s-private-zone-a.zone
+        }
+    }
+  
+    instance_template {
+        boot_disk {
+            type = "network-ssd"
+            size = 30
+        }
+        platform_id = "standard-v2"
+    network_interface {
+      subnet_ids = [yandex_vpc_subnet.k8s-private-zone-a.id]
+      nat = false
+    }
+}
+  scale_policy {
+    auto_scale {
+      min     = local.workspaces[terraform.workspace].scale_policy.auto_scale.min
+      max     = local.workspaces[terraform.workspace].scale_policy.auto_scale.max
+      initial = local.workspaces[terraform.workspace].scale_policy.auto_scale.initial
+    }
+  }
+  # scheduling_policy {
+  #     preemptible = true
+  #   }
+}
+
+
+resource "yandex_iam_service_account" "k8s-sa" {
+ name        = "k8s-sa"
+ description = "for managing k8s cluster"
+}
+
+resource "yandex_resourcemanager_folder_iam_binding" "editor" {
+ # Сервисному аккаунту назначается роль "editor".
+ folder_id = local.workspaces[terraform.workspace].folder_id
+ role      = "editor"
+ members   = [
+   "serviceAccount:${yandex_iam_service_account.k8s-sa.id}"
+ ]
+}
+
+resource "yandex_resourcemanager_folder_iam_binding" "images-puller" {
+ # Сервисному аккаунту назначается роль "container-registry.images.puller".
+ folder_id = local.workspaces[terraform.workspace].folder_id
+ role      = "container-registry.images.puller"
+ members   = [
+   "serviceAccount:${yandex_iam_service_account.k8s-sa.id}"
+ ]
+}
+
+
+resource "yandex_iam_service_account_static_access_key" "k8s-sa-static-key" {
+  service_account_id = yandex_iam_service_account.k8s-sa.id
+  description        = "for as k8s admin"
+}
