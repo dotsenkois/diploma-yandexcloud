@@ -15,4 +15,4 @@ users:
     primary_group: dotsenkois
     groups: root, sudo, wheel
 runcmd:
-  - [ git clone  ] 
+  - [ git clone https://github.com/dotsenkois/devops-diplom-yandexcloud.git ] 
