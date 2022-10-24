@@ -1,0 +1,16 @@
+- hosts: all
+  tasks:
+  - name: Copy id_rsa
+    ansible.builtin.copy:
+      src: ../../dotsenkois
+      dest: /home/dotsenkois/.ssh/id_rsa
+      force: true
+      mode: 600
+  - name: Copy inventory for db
+    ansible.builtin.copy:
+      src: ./templates/inventory.yaml
+      dest: /home/dotsenkois/postgresql_cluster/inventory.yaml
+      force: true
+  - name: run remote ansible
+    ansible.builtin.command:
+      cmd: "ansible-playbook -i /home/dotsenkois/postgresql_cluster/inventory.yaml /home/dotsenkois/postgresql_cluster/deploy_pgcluster.yml"

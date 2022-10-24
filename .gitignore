@@ -8,4 +8,4 @@ tf_create_infrasturcture/secrets/*
 **/99.tf_create_infrasturcture/secrets/*
 .kuber/ca.pem
 .kuber/test.kubeconfig
-04.tf_infrastructure_k8s_managed/00.test-vm-cloud_config.yaml
+04.tf_infrastructure_k8s_managed/*cloud_config*

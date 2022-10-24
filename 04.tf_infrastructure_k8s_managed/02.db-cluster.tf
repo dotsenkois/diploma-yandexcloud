@@ -22,14 +22,14 @@ resource "yandex_compute_instance" "db-master" {
     }
   }
   metadata = {
-    user-data = file("${path.module}/cloud_config.yaml")
+    user-data = file("${path.module}/02.db-cluster-cloud_config.yaml")
   }
   scheduling_policy {
     preemptible = local.workspaces[terraform.workspace].db_scheduling_policy.preemptible
   }
   network_interface {
-    subnet_id = yandex_vpc_subnet.db-snet.id
-    ip_address = format("192.168.20.%d", count.index + 10)
+    subnet_id = yandex_vpc_subnet.db-subnet.id
+    ip_address = format("192.168.10.%d", count.index + 99)
     nat       = "true"
   }
 }
@@ -57,14 +57,14 @@ resource "yandex_compute_instance" "db-slave" {
     }
   }
   metadata = {
-    user-data = file("${path.module}/cloud_config.yaml")
+    user-data = file("${path.module}/02.db-cluster-cloud_config.yaml")
   }
   scheduling_policy {
     preemptible = local.workspaces[terraform.workspace].db_scheduling_policy.preemptible
   }
   network_interface {
-    subnet_id = yandex_vpc_subnet.db-snet.id
-    ip_address = format("192.168.20.%d", count.index + 20)
+    subnet_id = yandex_vpc_subnet.db-subnet.id
+    ip_address = format("192.168.10.%d", count.index + 105)
     nat       = "true"
   }
 }

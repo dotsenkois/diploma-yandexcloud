@@ -1,5 +1,5 @@
 resource "local_file" "inventory-db" {
-  filename = var.HostsPath
+  filename = "../../postgresql_cluster/inventory.yaml"
   content  = <<-EOT
 ---
 all:
@@ -15,7 +15,7 @@ all:
 
   vars:
     ansible_connection_type: paramiko
-    ansible_user: root
+    ansible_user: dotsenkois
 
 
 etcd_cluster:
@@ -62,3 +62,13 @@ EOT
 
   ]
 }
+
+
+resource "null_resource" "run_ansible" {
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ../../postgresql_cluster/inventory.yaml ../../postgresql_cluster/deploy_pgcluster.yml"
+  }
+depends_on = [
+  local_file.inventory-db
+]
+  }

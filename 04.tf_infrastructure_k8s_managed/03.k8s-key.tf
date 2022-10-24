@@ -7,3 +7,8 @@ resource "yandex_kms_symmetric_key" "key-a" {
     prevent_destroy = false
   }
   }
+
+  resource "yandex_iam_service_account_static_access_key" "k8s-sa-static-key" {
+  service_account_id = yandex_iam_service_account.k8s-sa.id
+  description        = "for as k8s admin"
+}
