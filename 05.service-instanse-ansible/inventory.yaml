@@ -1,8 +1,0 @@
----
-all:
-  hosts:
-    service-instance-001:
-      ansible_host: 178.154.240.247
-  vars:
-    ansible_connection_type: paramiko
-    ansible_user: dotsenkois
