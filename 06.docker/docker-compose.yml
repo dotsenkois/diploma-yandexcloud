@@ -15,9 +15,9 @@ services:
   web:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: ./docker/web/Dockerfile
     volumes:
-      - ./:/usr/src/app
+      - ./diploma-web-app/:/usr/src/app
     depends_on:
       - postgresdb
     ports:

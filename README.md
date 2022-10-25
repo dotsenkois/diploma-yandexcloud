@@ -42,6 +42,10 @@ wget https:// | sh
 https://cloud.yandex.ru/docs/managed-gitlab/quickstart
 https://cloud.yandex.ru/docs/managed-kubernetes/operations/connect/create-static-conf
 
+Docker удалить всё
+docker rm -vf $(docker ps -aq)
+docker rmi -f $(docker images -aq)
+
 В данном репозитории представлен вариант равзертываения инфраструктуры благодаря облачному провайдеру яндес.облако.
 
 
