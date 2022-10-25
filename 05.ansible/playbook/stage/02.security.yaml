@@ -1,0 +1,24 @@
+---
+- name: Setup security senntings
+  hosts: all
+  handlers:
+    - name: Restart fail2ban
+      become: true
+      ansible.builtin.service:
+        name: fail2ban
+        state: restarted
+  tasks:
+    - name: Install fail2ban
+      become: true
+      ansible.builtin.apt:
+        name: fail2ban
+        state: present
+    - name: Copy configs
+      become: true
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: /etc/fail2ban/jail.d/
+        force: true
+        mode: "644"
+      with_fileglob:
+        - ../../templates/fail2ban/*

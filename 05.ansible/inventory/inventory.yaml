@@ -1,0 +1,50 @@
+---
+all:
+  hosts:
+# db-master
+    db-master-001:
+      ansible_host: 178.154.230.88
+# db-slave
+    db-slave-001:
+      ansible_host: 178.154.231.137
+# service-instance
+    service-instance-001:
+      ansible_host: 84.201.133.58
+# nat
+    nat:
+      ansible_host: 178.154.206.63
+
+  vars:
+    ansible_connection_type: paramiko
+    ansible_user: dotsenkois
+
+
+etcd_cluster:
+  hosts:
+    db-master-001:
+      ansible_host: 178.154.230.88
+    db-slave-001:
+      ansible_host: 178.154.231.137
+
+balancers:
+  hosts:
+    db-master-001:
+      ansible_host: 178.154.230.88
+    db-slave-001:
+      ansible_host: 178.154.231.137
+
+postgres_cluster:
+  children:
+    master:
+      hosts:
+    db-master-001:
+    replica:
+      hosts:
+    db-slave-001:
+
+service-instance:
+  children:
+    service-instance:
+    service-instance-001:
+      ansible_host: 84.201.133.58
+

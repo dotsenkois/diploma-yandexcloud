@@ -1,3 +1,3 @@
 locals {
-  buket_folder_id = "b1gjb5ngo2q2p2560dc7"
+  buket_folder_id = "b1gum2eadqus14gdt9jv"
 }

@@ -34,7 +34,7 @@ function 01.tf_cloud_prepare(){
     # pwd
     echo "ID каталога для bucket $id"
     # touch ./yc_folders/$buket_folder
-    echo -n "$id"> ./02.yc_folders/$buket_folder
+    echo -n $id> ./02.yc_folders/$buket_folder
     sed -i "s/buket_folder_id.*/buket_folder_id = \"$id\"/" ./01.tf_cloud_prepare/locals.tf 
   done
 
@@ -90,6 +90,10 @@ terraform apply --auto-approve
 
 }
 
+function get_my_external_ip(){
+  sed -i "s,ignoreip.*,ignoreip = 127.0.0.1/8 192.168.10.0/24 $(curl ipinfo.io/ip)/32," ./05.ansible/templates/fail2ban/default.conf
+}
+
 function main(){
 
 # настраиваем утилиту yc
@@ -99,6 +103,8 @@ yc config set cloud-id $YC_CLOUD_ID
 # переменные для создание ресурсов
 workspaces=(prod stage) # Название  рабочих пространств и основных каталогов облака
 buket_folders=(bucket) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
+
+get_my_external_ip
 
 00.install_yc
 01.tf_cloud_prepare

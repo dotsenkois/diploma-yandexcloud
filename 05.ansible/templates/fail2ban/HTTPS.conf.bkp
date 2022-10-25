@@ -1,0 +1,9 @@
+[https]
+enabled = true
+port = https
+filter = sshd
+action = iptables[name=sshd, port=ssh, protocol=tcp]
+logpath = /var/log/auth.log
+maxretry = 10
+findtime = 600
+ignoreip = 192.168.0.0/24

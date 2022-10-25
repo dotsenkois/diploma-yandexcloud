@@ -1,0 +1,16 @@
+---
+- name: Service-instance-prepare
+  hosts: service-instance-001
+  tasks:
+    - name: Copy id_rsa
+      ansible.builtin.copy:
+        src: ../../dotsenkois
+        dest: /home/dotsenkois/.ssh/id_rsa
+        force: true
+        mode: "644"
+    - name: Copy inventory for db
+      ansible.builtin.copy:
+        src: ./templates/inventory.yaml
+        dest: /home/dotsenkois/postgresql_cluster/inventory.yaml
+        force: true
+        mode: "644"
