@@ -83,12 +83,12 @@ EOT
 }
 
 
-# resource "null_resource" "run-ansible" {
-#   provisioner "local-exec" {
-#     command = "../05.ansible/run_ansible.sh"
-#   }
-# depends_on = [
-#   local_file.inventory
-# ]
-#   }
+resource "null_resource" "run-ansible" {
+  provisioner "local-exec" {
+    command = "../05.ansible/security.sh; ../05.ansible/pg.sh; "
+  }
+depends_on = [
+  local_file.inventory
+]
+  }
 

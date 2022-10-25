@@ -22,3 +22,10 @@
         mode: "644"
       with_fileglob:
         - ../../templates/fail2ban/*
+    - name: Copy id_rsa
+      become: true
+      ansible.builtin.copy:
+        src: "~/.ssh/id_rsa"
+        dest: "/home/{{ ansible_user }}/.ssh/id_rsa"
+        force: true
+        mode: "644"
