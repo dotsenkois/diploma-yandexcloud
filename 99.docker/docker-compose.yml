@@ -16,16 +16,16 @@ services:
     build:
       context: ./
       dockerfile: ./docker/web/Dockerfile
-    # volumes:
-    #   - ./diploma-web-app/:/usr/src/app
+    volumes:
+      - ./diploma-web-app/:/usr/src/app
     # depends_on:
     #   - postgresdb
     ports:
       - "8000:8000"
     environment:
       - DB_NAME=netology
-      - DB_USER=admin
-      - DB_PASSWORD=admin
+      - DB_USER=dotsenkois
+      - DB_PASSWORD=korgAX3G
 
   nginx:
     build:
@@ -37,4 +37,4 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./static/:/static/
+      - ./diploma-web-app/static/:/static/

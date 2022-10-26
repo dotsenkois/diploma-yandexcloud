@@ -1,0 +1,3 @@
+CREATE USER dotsenkois WITH PASSWORD 'korgAX3G';
+CREATE DATABASE netology;
+GRANT ALL PRIVILEGES on DATABASE netology to dotsenkois;
