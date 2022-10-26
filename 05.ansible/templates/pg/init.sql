@@ -1,3 +1,3 @@
-CREATE USER dotsenois WITH PASSWORD 'korgAX3G';
+CREATE USER admin WITH PASSWORD 'admin';
 CREATE DATABASE netology;
 GRANT ALL PRIVILEGES on DATABASE netology to admin;

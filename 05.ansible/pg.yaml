@@ -1,0 +1,82 @@
+---
+- name: Install and Configure PostgreSQL
+  hosts: db-master-001
+  vars:
+    pg_ver: 14
+  pre_tasks:
+    - name: Add PG repos
+      become: true
+      ansible.builtin.apt_repository:
+        repo: deb http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main
+        state: present
+        filename: pgdg.list
+    - name: Add PG repo key
+      become: true
+      ansible.builtin.apt_key:
+        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+        state: present
+    - name: Update packages list
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+  tasks:
+    - name: Install same version of PostgreSQL
+      become: true
+      ansible.builtin.apt:
+        pkg:
+          - postgresql-{{ pg_ver }}
+  handlers:
+    - name: Restart postgresql
+      become: true
+      ansible.builtin.service:
+        name: postgresql
+        state: restarted
+
+# - name: Setup security senntings
+#   hosts: db-master-001
+#   handlers:
+#     - name: Restart postgresql
+#       become: true
+#       ansible.builtin.service:
+#         name: postgresql
+#         state: restarted
+#   tasks:
+#     - name: Update apt packages
+#       become: true
+#       ansible.builtin.apt:
+#         update_cache: true
+#     - name: Install postgresql
+#       become: true
+#       ansible.builtin.apt:
+#         pkg:
+#           - postgresql-12
+#           - postgresql-contrib
+#           - postgresql-client
+#     - name: Copy PG configs
+#       become: true
+#       ansible.builtin.copy:
+#         src: "{{ item }}"
+#         dest: /etc/postgresql/12/main/conf.d/
+#         force: true
+#         mode: "664"
+#       with_fileglob:
+#         - ../templates/pg/*
+#     - name: Init DB
+#       become: true
+#       ansible.builtin.command:
+#         cmd: "--login --user=postgres psql < /etc/postgresql/12/main/conf.d/init.sql"
+#       register: fist_run
+#       changed_when: fist_run.rc != 0
+
+# # Create the file repository configuration:
+# sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+
+# # Import the repository signing key:
+# wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+# # Update the package lists:
+# sudo apt-get update
+
+# # Install the latest version of PostgreSQL.
+# # If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
+# sudo apt-get -y install postgresql

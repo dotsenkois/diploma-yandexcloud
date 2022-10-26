@@ -11,7 +11,7 @@ locals {
             }
             #db
             db_master_count = 1
-            db_slave_count = 1
+            db_slave_count = 0
 
             db_resources = {
                 cores         = "2"

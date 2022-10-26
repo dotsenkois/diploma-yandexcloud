@@ -29,7 +29,8 @@ resource "yandex_compute_instance" "db-master" {
   }
   network_interface {
     subnet_id = yandex_vpc_subnet.db-subnet.id
-    ip_address = format("192.168.10.%d", count.index + 99)
+    ip_address = "192.168.10.100"
+    # ip_address = format("192.168.10.%d", count.index + 99)
     nat       = "true"
   }
 }
