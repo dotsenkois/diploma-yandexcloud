@@ -28,7 +28,7 @@ function 01.tf_cloud_prepare(){
       yc resource-manager folder create \
       --name=$buket_folder \
       --description="Каталог для дипломного проекта по теме 'Дипломный практикум в Яндекс.Облако' студента Доценко Илья Сергеевич" 2>/dev/null
-    check_folder=$(yc resource-manager folder get --name=$buket_folder &>/dev/null )
+    check_folder=$(yc resource-manager folder get --name=$buket_folder 2>/dev/null )
     id=${check_folder:4:20}
     fi
 
@@ -54,7 +54,7 @@ function 01.tf_cloud_prepare(){
       --name=$workspace \
       --description="Каталог для дипломного проекта по теме 'Дипломный практикум в Яндекс.Облако' студента Доценко Илья Сергеевич" 2>/dev/null
 
-    check_folder=$(yc resource-manager folder get --name=$workspace &>/dev/null)
+    check_folder=$(yc resource-manager folder get --name=$workspace 2>/dev/null)
     id=${check_folder:4:20}
     fi
 

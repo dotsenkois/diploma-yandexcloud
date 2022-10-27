@@ -2,7 +2,7 @@
 - name: Install and Configure PostgreSQL
   hosts: db-master-001
   vars:
-    pg_ver: 14
+    pg_ver: 12
   pre_tasks:
     - name: Add PG repos
       become: true
@@ -25,6 +25,7 @@
       ansible.builtin.apt:
         pkg:
           - postgresql-{{ pg_ver }}
+          - postgresql-contrib
   handlers:
     - name: Restart postgresql
       become: true
