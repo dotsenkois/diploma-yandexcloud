@@ -1,0 +1,15 @@
+---
+all:
+  hosts:
+# db-master
+    remote:
+      ansible_host: 51.250.86.186
+# db-slave
+  vars:
+    ansible_connection_type: paramiko
+    ansible_user: dotsenkois
+
+    service-instance:
+    remote:
+      ansible_host: 51.250.86.186
+

@@ -1,0 +1,66 @@
+function 00.install_yc(){
+  echo "Проверка установки утилиты yc"
+  if [ ! -f /home/$USER/yandex-cloud/bin/yc ]; then
+      echo "устанавливаю утилиту YC"
+      curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+      export PATH=$PATH:/home/$USER/yandex-cloud/bin/
+  else
+      echo "Утилита YC уже установлена"
+      if [ ! -f /home/$USER/.config/yandex-cloud/config.yaml.bkp ]; then
+        yc_config_file="/home/$USER/.config/yandex-cloud/config.yaml"
+        cp $yc_config_file $yc_config_file".bkp"
+        echo "Бэкап файла конфигурации $yc_config_file выполнен"
+      fi
+  fi
+}
+
+function 03.service(){
+    # Передираем все 
+  for service_folder in "${service_folders[@]}"
+  do
+    # Настройка YC
+    # Создать каталог
+    echo "Проверяю наличие каталога $service_folder"
+    check_folder=''
+    check_folder=$(yc resource-manager folder get --name=$service_folder 2>/dev/null)
+    id=${check_folder:4:20}
+    if [ "$id" == "" ]; then
+      echo "создаю бакет"
+      yc resource-manager folder create \
+      --name=$service_folder \
+      --description="Каталог для дипломного проекта по теме 'Дипломный практикум в Яндекс.Облако' студента Доценко Илья Сергеевич" 2>/dev/null
+    check_folder=$(yc resource-manager folder get --name=$service_folder 2>/dev/null )
+    id=${check_folder:4:20}
+    fi
+    # pwd
+    echo "ID каталога $id"
+    # echo -n $id> ./02.yc_folders/$service_folder
+    sed -i "s/folder_id =.*/folder_id = \"$id\"/" ./03.service/locals.tf 
+  done
+  cd ./03.service
+  terraform init && terraform apply --auto-approve
+  ansible-playbook 
+
+}
+
+# function run_ansible(){
+# }
+
+
+function main(){
+
+# настраиваем утилиту yc
+yc config set token $YC_TOKEN
+yc config set cloud-id $YC_CLOUD_ID
+
+# переменные для создание ресурсов
+service_folders=(service) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
+
+00.install_yc
+03.service
+# run_ansible
+
+
+}
+
+main

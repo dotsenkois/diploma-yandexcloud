@@ -65,10 +65,10 @@ function 01.tf_cloud_prepare(){
   cd ./01.tf_cloud_prepare && terraform init && terraform apply --auto-approve
 }
 
-function 03.tf_infrastructure(){
+function 04.tf_infrastructure(){
 # k8s=2
 # if [[ $k8s == 1 ]]; then
-# cd ../03.tf_infrastructure_VM
+# cd ../04.tf_infrastructure_VM
 # else
 cd ../04.tf_infrastructure_k8s_managed
 # fi
@@ -101,9 +101,8 @@ function run_ansible(){
 }
 
 function monitoring(){
-
-  
-}
+  echo ""
+  }  
 
 function new_rsa_key(){
 echo "Проверяю наличе ключа для sa"
@@ -114,6 +113,11 @@ else
 echo "Ключ sa_rsa уже существует"
 fi
 }
+
+function 03.service(){
+cd ../03.service && terraform init -reconfigure && terraform apply --auto-approve
+}
+
 function main(){
 
 # настраиваем утилиту yc
@@ -122,14 +126,14 @@ yc config set cloud-id $YC_CLOUD_ID
 
 # переменные для создание ресурсов
 workspaces=(prod stage) # Название  рабочих пространств и основных каталогов облака
-service_folders=(bucket remote) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
+service_folders=(bucket) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
 
 get_my_external_ip
 new_rsa_key
 
 00.install_yc
 01.tf_cloud_prepare
-03.tf_infrastructure
+04.tf_infrastructure
 run_ansible
 }
 
