@@ -1,0 +1,29 @@
+#cloud-config
+version: v1
+ssh_pwauth: no
+packages_update: true
+packages_upgrade: true
+packages:
+ - ansible
+ - git
+ - docker-compose
+ - docker.io
+ - postgresql-client
+ - pgadmin3
+ - terraform
+ - helm
+ - 
+users:
+  - name: sa
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    passwd: $6$rounds=4096$2lnfl.BvbQyhFZDJ$uSLTNFXlqGV0kf6nIiE3nMJHJ.XPch5WF5OWg2T5tw8qSw3yNvNTMtKepItJowUM.emgaYd1baoyoLQI6GPgJ/
+    primary_group: sa
+    groups: root, docker
+
+# ansible:
+#   install-method: pip
+#   pull:
+#     url: "https://github.com/dotsenkois/postgresql_cluster.git"
+
+# runcmd:
+#  - git clone https://github.com/dotsenkois/postgresql_cluster.git

@@ -15,28 +15,28 @@ function 00.install_yc(){
 }
 function 01.tf_cloud_prepare(){
     # Передираем все 
-  for buket_folder in "${buket_folders[@]}"
+  for service_folder in "${service_folders[@]}"
   do
     # Настройка YC
     # Создать каталог
     echo "Проверяю наличие каталог для bucket"
     check_folder=''
-    check_folder=$(yc resource-manager folder get --name=$buket_folder 2>/dev/null)
+    check_folder=$(yc resource-manager folder get --name=$service_folder 2>/dev/null)
     id=${check_folder:4:20}
     if [ "$id" == "" ]; then
       echo "создаю бакет"
       yc resource-manager folder create \
-      --name=$buket_folder \
+      --name=$service_folder \
       --description="Каталог для дипломного проекта по теме 'Дипломный практикум в Яндекс.Облако' студента Доценко Илья Сергеевич" 2>/dev/null
-    check_folder=$(yc resource-manager folder get --name=$buket_folder 2>/dev/null )
+    check_folder=$(yc resource-manager folder get --name=$service_folder 2>/dev/null )
     id=${check_folder:4:20}
     fi
 
 
     # pwd
     echo "ID каталога для bucket $id"
-    echo -n $id> ./02.yc_folders/$buket_folder
-    sed -i "s/buket_folder_id.*/buket_folder_id = \"$id\"/" ./01.tf_cloud_prepare/locals.tf 
+    echo -n $id> ./02.yc_folders/$service_folder
+    sed -i "s/service_folder_id.*/service_folder_id = \"$id\"/" ./01.tf_cloud_prepare/locals.tf 
   done
 
     for workspace in "${workspaces[@]}" # Перебираем масиив с именами окружений
@@ -100,6 +100,20 @@ function run_ansible(){
 ./05.ansible/pg.sh
 }
 
+function monitoring(){
+
+  
+}
+
+function new_rsa_key(){
+echo "Проверяю наличе ключа для sa"
+if [ ! -f sa_rsa ]; then 
+ssh-keygen -f sa_rsa -P "";
+echo "Ключ sa_rsa создан"
+else
+echo "Ключ sa_rsa уже существует"
+fi
+}
 function main(){
 
 # настраиваем утилиту yc
@@ -108,9 +122,10 @@ yc config set cloud-id $YC_CLOUD_ID
 
 # переменные для создание ресурсов
 workspaces=(prod stage) # Название  рабочих пространств и основных каталогов облака
-buket_folders=(bucket) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
+service_folders=(bucket remote) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
 
 get_my_external_ip
+new_rsa_key
 
 00.install_yc
 01.tf_cloud_prepare

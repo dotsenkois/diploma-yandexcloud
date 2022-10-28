@@ -16,7 +16,7 @@ locals {
             db_resources = {
                 cores         = "2"
                 memory        = "4"
-                core_fraction = "20"
+                core_fraction = "5"
             }
             db_boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"
@@ -35,7 +35,7 @@ locals {
             jenkins_resources = {
                 cores         = "2"
                 memory        = "4"
-                core_fraction = "20"
+                core_fraction = "5"
             }
             jenkins_boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"
@@ -52,7 +52,7 @@ locals {
             gitlab_runner_resources = {
                 cores         = "2"
                 memory        = "4"
-                core_fraction = "20"
+                core_fraction = "5"
             }
             gitlab_runner_boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"
@@ -69,7 +69,7 @@ locals {
             service-instance_resources = {
                 cores         = "2"
                 memory        = "4"
-                core_fraction = "20"
+                core_fraction = "5"
             }
             service-instance_boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"

@@ -8,9 +8,9 @@
         dest: /home/dotsenkois/.ssh/id_rsa
         force: true
         mode: "644"
-    - name: Copy inventory for db
+    - name: Copy web app
       ansible.builtin.copy:
-        src: ./templates/inventory.yaml
-        dest: /home/dotsenkois/postgresql_cluster/inventory.yaml
+        src: ../../diploma-web-app/
+        dest: /home/dotsenkois/diploma-web-app/
         force: true
-        mode: "644"
+        mode: "744"
