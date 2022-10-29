@@ -1,17 +1,18 @@
 function 00.install_yc(){
   export PATH=$PATH:/home/$USER/yandex-cloud/bin/
+  curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
   echo "Проверка установки утилиты yc"
-  if [ ! -f /home/$USER/yandex-cloud/bin/yc ]; then
-      echo "устанавливаю утилиту YC"
-      curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
-  else
-      echo "Утилита YC уже установлена"
-      if [ ! -f /home/$USER/.config/yandex-cloud/config.yaml.bkp && ! -n /home/$USER/.config/yandex-cloud/config.yaml ]; then
-        yc_config_file="/home/$USER/.config/yandex-cloud/config.yaml"
-        cp $yc_config_file $yc_config_file".bkp"
-        echo "Бэкап файла конфигурации $yc_config_file выполнен"
-      fi
-  fi
+  # if [ ! -f /home/$USER/yandex-cloud/bin/yc ]; then
+  #     echo "устанавливаю утилиту YC"
+  #     curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+  # else
+  #     echo "Утилита YC уже установлена"
+  #     if [ ! -f /home/$USER/.config/yandex-cloud/config.yaml.bkp && ! -n /home/$USER/.config/yandex-cloud/config.yaml ]; then
+  #       yc_config_file="/home/$USER/.config/yandex-cloud/config.yaml"
+  #       cp $yc_config_file $yc_config_file".bkp"
+  #       echo "Бэкап файла конфигурации $yc_config_file выполнен"
+  #     fi
+  # fi
 }
 
 function 03.service(){
