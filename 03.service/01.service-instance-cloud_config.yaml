@@ -23,10 +23,11 @@ users:
     groups: root, docker
 runcmd:
   - [ wget, "https://storage.yandexcloud.net/bucket-sa-distrib1/terraform_1.3.3_linux_amd64.zip", -O, "/tmp/terraform.zip" ]
-  - [ pip, install, ansible, helm, helm-charts ]
+  - sudo unzip /tmp/terraform.zip -d /usr/bin/
+  - [ pip, install, ansible ]
   - [ git, clone ,"https://github.com/dotsenkois/diploma-yandexcloud.git" ]
   - [ git, clone ,"https://github.com/dotsenkois/diploma-web-app.git" ]
-  - ssh-keygen -f ~/.ssh/id_rsq -P ""
+
 
 
 # ansible:

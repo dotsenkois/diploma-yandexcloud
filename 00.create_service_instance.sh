@@ -6,7 +6,7 @@ function 00.install_yc(){
       export PATH=$PATH:/home/$USER/yandex-cloud/bin/
   else
       echo "Утилита YC уже установлена"
-      if [ ! -f /home/$USER/.config/yandex-cloud/config.yaml.bkp ]; then
+      if [ ! -f /home/$USER/.config/yandex-cloud/config.yaml.bkp && ! -n /home/$USER/.config/yandex-cloud/config.yaml ]; then
         yc_config_file="/home/$USER/.config/yandex-cloud/config.yaml"
         cp $yc_config_file $yc_config_file".bkp"
         echo "Бэкап файла конфигурации $yc_config_file выполнен"
