@@ -142,7 +142,7 @@ service_folders=(bucket) # каталог для создания s3, в кот�
 
 get_my_external_ip
 new_rsa_key
-
+configure_terraform
 00.install_yc
 01.tf_cloud_prepare
 04.tf_infrastructure
