@@ -14,7 +14,7 @@ function 00.install_yc(){
   fi
 }
 
-function 03.service(){
+function 00.service(){
     # Передираем все 
   for service_folder in "${service_folders[@]}"
   do
@@ -35,9 +35,9 @@ function 03.service(){
     # pwd
     echo "ID каталога $id"
     # echo -n $id> ./02.yc_folders/$service_folder
-    sed -i "s/folder_id =.*/folder_id = \"$id\"/" ./03.service/00.locals.tf 
+    sed -i "s/folder_id =.*/folder_id = \"$id\"/" ./00.service/00.locals.tf 
   done
-  cd ./03.service
+  cd ./00.service
   terraform init -reconfigure && terraform apply --auto-approve
   # ansible-playbook 
 
@@ -57,7 +57,7 @@ yc config set cloud-id $YC_CLOUD_ID
 service_folders=(service2) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
 
 00.install_yc
-03.service
+00.service
 # run_ansible
 
 

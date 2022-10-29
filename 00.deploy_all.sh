@@ -1,6 +1,6 @@
 function 00.install_yc(){
-    curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
-    export PATH=$PATH:/home/$USER/yandex-cloud/bin/
+    # curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+    # export PATH=$PATH:/home/$USER/yandex-cloud/bin/
 
   echo "Проверка установки утилиты yc"
   if [ ! -f /home/$USER/yandex-cloud/bin/yc ]; then
