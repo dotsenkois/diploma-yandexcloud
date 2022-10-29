@@ -27,6 +27,8 @@ runcmd:
   - [ pip, install, ansible ]
   - [ git, clone ,"https://github.com/dotsenkois/diploma-yandexcloud.git" ]
   - [ git, clone ,"https://github.com/dotsenkois/diploma-web-app.git" ]
+  - export YC_TOKEN=AQAAAABC7dWJAATuwdE1Qnh17ENkj1qbYxM2p2s
+  - export YC_CLOUD_ID=b1gd1jefhj92vrmaunt5
 
 
 
