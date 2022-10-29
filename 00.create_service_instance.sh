@@ -1,9 +1,9 @@
 function 00.install_yc(){
+  export PATH=$PATH:/home/$USER/yandex-cloud/bin/
   echo "Проверка установки утилиты yc"
   if [ ! -f /home/$USER/yandex-cloud/bin/yc ]; then
       echo "устанавливаю утилиту YC"
       curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
-      export PATH=$PATH:/home/$USER/yandex-cloud/bin/
   else
       echo "Утилита YC уже установлена"
       if [ ! -f /home/$USER/.config/yandex-cloud/config.yaml.bkp && ! -n /home/$USER/.config/yandex-cloud/config.yaml ]; then
