@@ -7,8 +7,6 @@ packages:
  - git
  - docker-compose
  - docker.io
-#  - postgresql-client
-#  - pgadmin3
  - python3-pip
  - htop
  - net-tools
@@ -17,8 +15,6 @@ users:
     sudo: ALL=(ALL) NOPASSWD:ALL
     lock_passwd: false
     passwd: $6$rounds=4096$7SUAIMSGEVz7PUb4$6xyaI.DarGCS8X4Qb1fmrxEPx2DVTxTdcNJQgU1gVQINgTglIrgs2XBJ5NVIs7K8N2XBxWBShAXvyx1PeqwJI/
-    # ssh_authorized_keys:
-    #   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrZa9v2u/qJB4T9g9tTIfsjj4jjGZZ34Q6tKvNgis5TwEZ3AKOf+VmmmB2GJLaso8LbNnhONyCb15E6l15Ye1TzsgO79TX4eJtoQDhsgJ2R+WZEBfcBK22HFsn14bvIaYLjFg9sXboIJ/YtebF/VaeP1WNxiMhasEWGX+i/pVb3MiY5b9xcX+YVRCqJkZrgyw5jwOPCQ+qgxNmPvEWlSlJaQ14IE1ajGJYRfembCg4kh/1oLjQpJr4IAjvgy6zsyEiOSg+wvvKFmD2zkP2haVEtXn8Jaj7vJwrCe0SlxmokXzX2TOysANjgVMy55fJEJOu4McARbGc6MAdX8cIPOQRTQnlv17IJCNmvWXWz7l0ZXfLa4SsadsXrc2vpPB0S7RFjOHjUVV+FPgmriPrJYO2HKwweuhBnKSiOagJEoS8/RS1L3YJ0f6QQlQmljqxjp2LDnwMTxQfHEnwrnfvtaMZSwDt/qEwhVRpTpPHj6j0kXWv4s3gevQ6HKUNzjAbrtU= dotsenkois@dotsenkois-vm
     primary_group: dotsenkois
     groups: root, docker
 runcmd:
@@ -29,13 +25,3 @@ runcmd:
   - [ git, clone ,"https://github.com/dotsenkois/diploma-web-app.git" ]
   - export YC_TOKEN=AQAAAABC7dWJAATuwdE1Qnh17ENkj1qbYxM2p2s
   - export YC_CLOUD_ID=b1gd1jefhj92vrmaunt5
-
-
-
-# ansible:
-#   install-method: pip
-#   pull:
-#     url: "https://github.com/dotsenkois/postgresql_cluster.git"
-
-# runcmd:
-#  - git clone https://github.com/dotsenkois/postgresql_cluster.git

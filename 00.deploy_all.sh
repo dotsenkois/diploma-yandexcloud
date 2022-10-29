@@ -116,15 +116,7 @@ function monitoring(){
   echo ""
   }  
 
-function new_rsa_key(){
-echo "Проверяю наличе ключа для sa"
-if [ ! -f ~/.ssh/id_rsa ]; then 
-ssh-keygen -f ~/.ssh/id_rsa -P "";
-echo "Ключ sa_rsa создан"
-else
-echo "Ключ sa_rsa уже существует"
-fi
-}
+
 
 function 03.service(){
 cd ../03.service && terraform init -reconfigure && terraform apply --auto-approve
@@ -141,7 +133,7 @@ workspaces=(prod stage) # Название  рабочих пространст�
 service_folders=(bucket) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
 
 get_my_external_ip
-new_rsa_key
+# new_rsa_key
 configure_terraform
 00.install_yc
 01.tf_cloud_prepare

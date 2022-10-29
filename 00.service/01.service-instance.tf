@@ -19,7 +19,7 @@ resource "yandex_compute_instance" "service-instance" {
   }
   metadata = {
     user-data = file("${path.module}/01.service-instance-cloud_config.yaml")
-    ssh-keys = "dotsenkois:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "${var.ssh_user}:${file(var.ssh_pub_key)}"
     serial-port-enable = "1"
   }
   scheduling_policy {
@@ -52,10 +52,8 @@ resource "local_file" "inventory" {
 ---
 all:
   hosts:
-# db-master
     ${yandex_compute_instance.service-instance.hostname}:
       ansible_host: ${yandex_compute_instance.service-instance.network_interface.0.nat_ip_address}
-# db-slave
   vars:
     ansible_connection_type: paramiko
     ansible_user: dotsenkois

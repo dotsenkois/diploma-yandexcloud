@@ -46,6 +46,15 @@ function 00.service(){
 # function run_ansible(){
 # }
 
+function new_rsa_key(){
+echo "Проверяю наличе ключа для netology"
+if [ ! -f ./netology ]; then 
+ssh-keygen -f ./netology -P "";
+echo "Ключ netology создан"
+else
+echo "Ключ netology уже существует"
+fi
+}
 
 function main(){
 
@@ -55,7 +64,7 @@ yc config set cloud-id $YC_CLOUD_ID
 
 # переменные для создание ресурсов
 service_folders=(service2) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
-
+new_rsa_key
 00.install_yc
 00.service
 # run_ansible
