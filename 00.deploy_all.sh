@@ -106,8 +106,8 @@ function monitoring(){
 
 function new_rsa_key(){
 echo "Проверяю наличе ключа для sa"
-if [ ! -f sa_rsa ]; then 
-ssh-keygen -f sa_rsa -P "";
+if [ ! -f ~/.ssh/id_rsa ]; then 
+ssh-keygen -f ~/.ssh/id_rsa -P "";
 echo "Ключ sa_rsa создан"
 else
 echo "Ключ sa_rsa уже существует"

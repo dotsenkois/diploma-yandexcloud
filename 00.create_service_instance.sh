@@ -25,21 +25,22 @@ function 03.service(){
     check_folder=$(yc resource-manager folder get --name=$service_folder 2>/dev/null)
     id=${check_folder:4:20}
     if [ "$id" == "" ]; then
-      echo "создаю бакет"
+      echo "создаю каталог $service_folder"
       yc resource-manager folder create \
       --name=$service_folder \
-      --description="Каталог для дипломного проекта по теме 'Дипломный практикум в Яндекс.Облако' студента Доценко Илья Сергеевич" 2>/dev/null
+      --description="Каталог для сервисных нужд" 2>/dev/null
     check_folder=$(yc resource-manager folder get --name=$service_folder 2>/dev/null )
     id=${check_folder:4:20}
     fi
     # pwd
     echo "ID каталога $id"
     # echo -n $id> ./02.yc_folders/$service_folder
-    sed -i "s/folder_id =.*/folder_id = \"$id\"/" ./03.service/locals.tf 
+    sed -i "s/folder_id =.*/folder_id = \"$id\"/" ./03.service/00.locals.tf 
   done
   cd ./03.service
-  terraform init && terraform apply --auto-approve
-  ansible-playbook 
+  # rm 
+  terraform init -reconfigure && terraform apply --auto-approve
+  # ansible-playbook 
 
 }
 
@@ -54,7 +55,7 @@ yc config set token $YC_TOKEN
 yc config set cloud-id $YC_CLOUD_ID
 
 # переменные для создание ресурсов
-service_folders=(service) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
+service_folders=(service2) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
 
 00.install_yc
 03.service

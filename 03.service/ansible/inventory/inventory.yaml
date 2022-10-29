@@ -3,7 +3,7 @@ all:
   hosts:
 # db-master
     remote:
-      ansible_host: 51.250.86.186
+      ansible_host: 62.84.114.115
 # db-slave
   vars:
     ansible_connection_type: paramiko
@@ -11,5 +11,5 @@ all:
 
     service-instance:
     remote:
-      ansible_host: 51.250.86.186
+      ansible_host: 62.84.114.115
 

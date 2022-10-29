@@ -7,9 +7,11 @@ packages:
  - git
  - docker-compose
  - docker.io
- - postgresql-client
- - pgadmin3
+#  - postgresql-client
+#  - pgadmin3
  - python3-pip
+ - htop
+ - net-tools
 users:
   - name: dotsenkois
     sudo: ALL=(ALL) NOPASSWD:ALL
@@ -19,6 +21,13 @@ users:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrZa9v2u/qJB4T9g9tTIfsjj4jjGZZ34Q6tKvNgis5TwEZ3AKOf+VmmmB2GJLaso8LbNnhONyCb15E6l15Ye1TzsgO79TX4eJtoQDhsgJ2R+WZEBfcBK22HFsn14bvIaYLjFg9sXboIJ/YtebF/VaeP1WNxiMhasEWGX+i/pVb3MiY5b9xcX+YVRCqJkZrgyw5jwOPCQ+qgxNmPvEWlSlJaQ14IE1ajGJYRfembCg4kh/1oLjQpJr4IAjvgy6zsyEiOSg+wvvKFmD2zkP2haVEtXn8Jaj7vJwrCe0SlxmokXzX2TOysANjgVMy55fJEJOu4McARbGc6MAdX8cIPOQRTQnlv17IJCNmvWXWz7l0ZXfLa4SsadsXrc2vpPB0S7RFjOHjUVV+FPgmriPrJYO2HKwweuhBnKSiOagJEoS8/RS1L3YJ0f6QQlQmljqxjp2LDnwMTxQfHEnwrnfvtaMZSwDt/qEwhVRpTpPHj6j0kXWv4s3gevQ6HKUNzjAbrtU= dotsenkois@dotsenkois-vm
     primary_group: dotsenkois
     groups: root, docker
+runcmd:
+  - [ wget, "https://storage.yandexcloud.net/bucket-sa-distrib1/terraform_1.3.3_linux_amd64.zip", -O, "/tmp/terraform.zip" ]
+  - [ pip, install, ansible, helm, helm-charts ]
+  - [ git, clone ,"https://github.com/dotsenkois/diploma-yandexcloud.git" ]
+  - [ git, clone ,"https://github.com/dotsenkois/diploma-web-app.git" ]
+  - ssh-keygen -f ~/.ssh/id_rsq -P ""
+
 
 # ansible:
 #   install-method: pip

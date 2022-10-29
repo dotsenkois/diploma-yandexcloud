@@ -1,7 +1,7 @@
 resource "yandex_compute_instance" "service-instance" {
   name        = "remote"
   hostname    = "remote"
-  description = "For remote"
+  description = "For remote access"
   folder_id = local.folder_id
   allow_stopping_for_update = true
 

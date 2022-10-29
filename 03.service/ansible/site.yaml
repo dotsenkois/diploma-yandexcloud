@@ -2,69 +2,67 @@
 - name: Install and Configure remote service vm
   hosts: all
   pre_tasks:
-    - name: Instale packages list
-      become: true
-      ansible.builtin.apt:
-        pkg:
-          - git
-          - docker-compose
-          - docker.io
-          - postgresql-client
-          - python3-pip
-          # - golang-go
-        update_cache: true
-    # - name: Instale ansible
+    # - name: Instale packages list
+    #   become: true
+    #   ansible.builtin.apt:
+    #     pkg:
+    #       - git
+    #       - docker-compose
+    #       - docker.io
+    #       - postgresql-client
+    #       - python3-pip
+    #       # - golang-go
+    #     update_cache: true
+    # # - name: Instale ansible
     #   become: true
     #   ansible.builtin.command:
     #     cmd: "apt update && apt upgrade -y"
           # - terraform-installer    
-    - name: Instale ansible
-      ansible.builtin.pip:
-        name:
-          - ansible
-          # - terraform-installer
-    - name: Download golang
-      ansible.builtin.get_url:
-        url: "https://go.dev/dl/go1.19.2.linux-amd64.tar.gz"
-        dest: /tmp/go1.19.2.linux-amd64.tar.gz
-        mode: "644"
-    - name: Untar golang
-      become: true
-      ansible.builtin.unarchive:
-        src: /tmp/go1.19.2.linux-amd64.tar.gz
-        dest: /usr/local/
-        remote_src: true
-    - name: G
-      shell: "echo $MY_ENV_VARIABLE"
-      environment:
-        MY_ENV_VARIABLE: ansiblevar.$PATH:
-        MY_ENV_VARIABLE: whatever_value
-        MY_ENV_VARIABLE: whatever_value
+    # - name: Instale ansible
+    #   ansible.builtin.pip:
+    #     name:
+    #       - ansible
+    #       # - terraform-installer
+    # - name: Download golang
+    #   ansible.builtin.get_url:
+    #     url: "https://go.dev/dl/go1.19.2.linux-amd64.tar.gz"
+    #     dest: /tmp/go1.19.2.linux-amd64.tar.gz
+    #     mode: "644"
+    # - name: Untar golang
+    #   become: true
+    #   ansible.builtin.unarchive:
+    #     src: /tmp/go1.19.2.linux-amd64.tar.gz
+    #     dest: /usr/local/
+    #     remote_src: true
+    # - name: G
+    #   shell: "echo $MY_ENV_VARIABLE"
+    #   environment:
+    #     MY_ENV_VARIABLE: ansiblevar.$PATH:
+    #     MY_ENV_VARIABLE: whatever_value
+    #     MY_ENV_VARIABLE: whatever_value
 
-
-
-    - name: Download helm
-      ansible.builtin.get_url:
-        url: "https://get.helm.sh/helm-v3.10.1-linux-amd64.tar.gz"
-        dest: /tmp/helm-v3.10.1-linux-amd64.tar.gz
-        mode: "644"
-    - name: Untar helm
-      become: true
-      ansible.builtin.unarchive:
-        src: /tmp/helm-v3.10.1-linux-amd64.tar.gz
-        dest: /usr/local/bin/
-        remote_src: true
-    - name: Create project directory terraform
-      ansible.builtin.file:
-        state: directory
-        path: './terraform'
-        mode: "777"
-    - name: Download terraform
-      ansible.builtin.git:
-        repo: https://github.com/hashicorp/terraform.git
-        clone: true
-        version: f5de1099ff0e6a2cfd99716334c89558a481792c
-        dest: ./terraform/
+    # - name: Download helm
+    #   ansible.builtin.get_url:
+    #     url: "https://get.helm.sh/helm-v3.10.1-linux-amd64.tar.gz"
+    #     dest: /tmp/helm-v3.10.1-linux-amd64.tar.gz
+    #     mode: "644"
+    # - name: Untar helm
+    #   become: true
+    #   ansible.builtin.unarchive:
+    #     src: /tmp/helm-v3.10.1-linux-amd64.tar.gz
+    #     dest: /usr/local/bin/
+    #     remote_src: true
+    # # - name: Create project directory terraform
+    # #   ansible.builtin.file:
+    # #     state: directory
+    # #     path: './terraform'
+    # #     mode: "777"
+    # # - name: Download terraform
+    # #   ansible.builtin.git:
+    # #     repo: https://github.com/hashicorp/terraform.git
+    # #     clone: true
+    # #     version: f5de1099ff0e6a2cfd99716334c89558a481792c
+    #     dest: ./terraform/
   tasks: []
     # - name: Install same version of PostgreSQL
     #   become: true
