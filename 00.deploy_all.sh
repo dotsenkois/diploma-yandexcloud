@@ -18,10 +18,10 @@ function 00.install_yc(){
 }
 function configure_terraform(){
     if [ ! -f ~/.terraformrc ]; then
-    cp ./.terraformrc ~/.terraformrc
+    cp .terraformrc ~/.terraformrc
     else
     mv ~/.terraformrc ~/.terraformrc.old
-    cp ./.terraformrc ~/.terraformrc
+    cp .terraformrc ~/.terraformrc
     fi
 }
 
