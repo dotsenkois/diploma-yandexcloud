@@ -18,9 +18,9 @@ resource "yandex_compute_instance" "service-instance" {
     }
   }
   metadata = {
-    serial-port-enable = "1"
-    ssh-keys = "dotsenkois:${file("../dotsenkois.pub")}"
     user-data = file("${path.module}/01.service-instance-cloud_config.yaml")
+    ssh-keys = "dotsenkois:${file("~/.ssh/id_rsa/pub")}"
+    serial-port-enable = "1"
   }
   scheduling_policy {
     preemptible = local.service-instance_scheduling_policy.preemptible
