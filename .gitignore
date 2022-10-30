@@ -9,3 +9,6 @@ tf_create_infrasturcture/secrets/*
 .kuber/ca.pem
 .kuber/test.kubeconfig
 ./02.yc_folders/*
+02.yc_folders/stage
+02.yc_folders/bucket
+02.yc_folders/prod
