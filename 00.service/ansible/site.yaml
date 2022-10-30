@@ -63,6 +63,11 @@
       register: diploma-web-app
       changed_when: "'Cloning into' in diploma-web-app.stdout"
       when: not diploma-web-app_exists.stat.exists
+    - name: Install helm
+      ansible.builtin.shell:
+        cmd: "curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash"
+      register: helm
+      changed_when: helm.rc != 0
 
 
 

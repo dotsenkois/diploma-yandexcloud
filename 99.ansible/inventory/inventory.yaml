@@ -1,0 +1,35 @@
+---
+all:
+  hosts:
+# db-master
+    db-master-001:
+      ansible_host: 51.250.95.59
+# db-slave
+
+# nat
+    nat:
+      ansible_host: 62.84.113.87
+
+  vars:
+    ansible_connection_type: paramiko
+    ansible_user: dotsenkois
+
+
+etcd_cluster:
+  hosts:
+    db-master-001:
+      ansible_host: 51.250.95.59
+
+balancers:
+  hosts:
+    db-master-001:
+      ansible_host: 51.250.95.59
+
+postgres_cluster:
+  children:
+    master:
+      hosts:
+    db-master-001:
+    replica:
+      hosts:
+

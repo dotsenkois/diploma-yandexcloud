@@ -1,0 +1,83 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diplima-web-app
+  # namespace: prod
+  labels:
+    app: diplima-web-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diplima-web-app
+  template:
+    metadata:
+      labels:
+        app: diplima-web-app
+    spec:
+      containers:
+      - name: frontend
+        image:  dotsenkois/diploma-web-app_frontend:0.1.1
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+
+      - name: backend
+        image: dotsenkois/diploma-web-app_backend:0.1.1
+        ports:
+        - containerPort: 8000
+        env:
+          - name: DB_NAME
+            value: netology
+          - name: DB_USER
+            value: dotsenkois
+          - name: DB_PASSWORD
+            value: "12345678"
+          - name: HOST
+            value: 192.168.10.100          
+          - name: PORT
+            value: "5432"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+     
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: stage
+spec:
+  ports:
+    - name: web
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080
+  selector:
+    app: frontend
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: stage
+spec:
+  ports:
+    - name: backend
+      port: 8000
+      targetPort: 8000
+  selector:
+    app: backend
+  type: ClusterIP
