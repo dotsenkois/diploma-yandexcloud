@@ -12,3 +12,4 @@ tf_create_infrasturcture/secrets/*
 02.yc_folders/stage
 02.yc_folders/bucket
 02.yc_folders/prod
+.kuber/cluster_id

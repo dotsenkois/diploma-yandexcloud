@@ -13,6 +13,7 @@ packages:
  - unzip
  - zip
  - postgresql-client-common
+ - jq
 users:
   - name: dotsenkois
     shell: /bin/bash

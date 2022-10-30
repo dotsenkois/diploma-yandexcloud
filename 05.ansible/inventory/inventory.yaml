@@ -3,7 +3,7 @@ all:
   hosts:
 # db-master
     db-master-001:
-      ansible_host: 84.201.175.97
+      ansible_host: 51.250.95.59
 # db-slave
 
 # nat
@@ -18,12 +18,12 @@ all:
 etcd_cluster:
   hosts:
     db-master-001:
-      ansible_host: 84.201.175.97
+      ansible_host: 51.250.95.59
 
 balancers:
   hosts:
     db-master-001:
-      ansible_host: 84.201.175.97
+      ansible_host: 51.250.95.59
 
 postgres_cluster:
   children:
