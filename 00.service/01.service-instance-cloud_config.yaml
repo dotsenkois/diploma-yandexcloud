@@ -15,7 +15,7 @@ packages:
 users:
   - name: dotsenkois
     shell: /bin/bash
-    sudo: ALL=(ALL) NOPASSWD:ALL
+    sudo: ALL=(ALL) NOPASSWD:ALL    
     lock_passwd: false
     passwd: $6$rounds=4096$7SUAIMSGEVz7PUb4$6xyaI.DarGCS8X4Qb1fmrxEPx2DVTxTdcNJQgU1gVQINgTglIrgs2XBJ5NVIs7K8N2XBxWBShAXvyx1PeqwJI/
     primary_group: dotsenkois

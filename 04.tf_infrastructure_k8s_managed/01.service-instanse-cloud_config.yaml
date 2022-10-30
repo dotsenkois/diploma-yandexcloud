@@ -12,7 +12,8 @@ packages:
  - pgadmin3
 users:
   - name: dotsenkois
-    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL    
     passwd: $6$rounds=4096$2lnfl.BvbQyhFZDJ$uSLTNFXlqGV0kf6nIiE3nMJHJ.XPch5WF5OWg2T5tw8qSw3yNvNTMtKepItJowUM.emgaYd1baoyoLQI6GPgJ/
     ssh_authorized_keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCcdF/ZrY6ot17fMyUBwaw9eVcYvKu53emT2/AylArwh/sPd8hQJxktBT41Uu7oLQsIdt0v0ZtosSQFUSJPXfNFnlpUHPlT7/BRbfigIlvlGwqGF7uq3SrlKJKDI0S5+RDEdO3tFnGlNHuUiHwrMGzWabU7qNae/dSX6LPA7aJc38B3J8ZF22mFL01/qdpkN6lkQWdoILhK9EskdD2XPu4JeTpND+/IXMMpTPf8rhkWL0+rb3MdLyXnPa44fMpd9UYLwUVd9QIV96pXskso+VC6NZHCNH6YXLuP6XxrQr7PAph1lIu0MqhAzLELx/N6A10BLoNiI+cas79KEjR+rNghH6w/DH65z5cecJYFmqpqv4buIobLRHas8s00047M+PLqKyGqL9zfUWIkbjDNd7fp1iNieKEKCY5lPMNIG1Y6o5zZSlc3tOPQ2VNB67QsamC+jxX0rL2weIEvSzR3eb4wDNJGDPZC9rOJb0BQ0MKs8UUpMhw+cCRlXOI+L4kzuYk= dotsenkois@dotsenkois-vm
