@@ -1,3 +1,3 @@
 locals {
-  buket_folder_id = "b1gtabs3djnph0h5ki9b"
+  buket_folder_id = file("../02.yc_folders/bucket")
 }
