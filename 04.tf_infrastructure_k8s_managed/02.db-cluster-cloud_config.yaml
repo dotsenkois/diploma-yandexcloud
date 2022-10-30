@@ -15,13 +15,13 @@ runcmd:
   - sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
   - wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
   - sudo apt-get update
-  - sudo apt-get -y install postgresql-14
+  - sudo apt-get -y install postgresql-14 libpq-dev postgresql-contrib
   - wget https://raw.githubusercontent.com/dotsenkois/diploma-web-app/main/docker/postgres/init.sql -O ~/init.sql
   - sudo --user=postgres psql < ~/init.sql
-  - sudo echo "listen_addresses = '*'" > /etc/postgresql/14/main/conf.d/my.conf
-  - sudo echo "host    netology     all             192.168.10.0/24            scram-sha-256" >> /etc/postgresql/14/main/conf.d/my.conf
-  - sudo echo "host    netology     all             51.250.14.227/32            scram-sha-256" >> /etc/postgresql/14/main/conf.d/my.conf
-
+  - sudo wget https://raw.githubusercontent.com/dotsenkois/diploma-web-app/main/docker/postgres/my.conf -O /etc/postgresql/14/main/conf.d/my.conf
+  - sudo echo "host    netology     dotsenkois             192.168.10.0/24            scram-sha-256 " >> /etc/postgresql/14/main/pg_hba.conf
+  - sudo echo "host    netology     dotsenkois             51.250.14.227/32            scram-sha-256 " >> /etc/postgresql/14/main/pg_hba.conf
+  - sudo systemctl restart postgresql
   
 packages:
   net-tools
