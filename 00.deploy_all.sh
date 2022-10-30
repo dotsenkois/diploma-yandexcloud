@@ -131,7 +131,7 @@ yc config set cloud-id $YC_CLOUD_ID
 # переменные для создание ресурсов
 workspaces=(prod stage) # Название  рабочих пространств и основных каталогов облака
 service_folders=(bucket) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
-./00.create_service_instance.sh
+# ./00.create_service_instance.sh
 get_my_external_ip
 # new_rsa_key
 configure_terraform
