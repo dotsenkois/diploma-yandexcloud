@@ -10,8 +10,11 @@ packages:
  - python3-pip
  - htop
  - net-tools
+ - unzip
+ - zip
 users:
   - name: dotsenkois
+    shell: /bin/bash
     sudo: ALL=(ALL) NOPASSWD:ALL
     lock_passwd: false
     passwd: $6$rounds=4096$7SUAIMSGEVz7PUb4$6xyaI.DarGCS8X4Qb1fmrxEPx2DVTxTdcNJQgU1gVQINgTglIrgs2XBJ5NVIs7K8N2XBxWBShAXvyx1PeqwJI/
@@ -19,10 +22,9 @@ users:
     groups: root, docker
     ssh_authorized_keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCcdF/ZrY6ot17fMyUBwaw9eVcYvKu53emT2/AylArwh/sPd8hQJxktBT41Uu7oLQsIdt0v0ZtosSQFUSJPXfNFnlpUHPlT7/BRbfigIlvlGwqGF7uq3SrlKJKDI0S5+RDEdO3tFnGlNHuUiHwrMGzWabU7qNae/dSX6LPA7aJc38B3J8ZF22mFL01/qdpkN6lkQWdoILhK9EskdD2XPu4JeTpND+/IXMMpTPf8rhkWL0+rb3MdLyXnPa44fMpd9UYLwUVd9QIV96pXskso+VC6NZHCNH6YXLuP6XxrQr7PAph1lIu0MqhAzLELx/N6A10BLoNiI+cas79KEjR+rNghH6w/DH65z5cecJYFmqpqv4buIobLRHas8s00047M+PLqKyGqL9zfUWIkbjDNd7fp1iNieKEKCY5lPMNIG1Y6o5zZSlc3tOPQ2VNB67QsamC+jxX0rL2weIEvSzR3eb4wDNJGDPZC9rOJb0BQ0MKs8UUpMhw+cCRlXOI+L4kzuYk= dotsenkois@dotsenkois-vm
-
-bootcmd:
-  - [ wget, "https://storage.yandexcloud.net/bucket-sa-distrib1/terraform_1.3.3_linux_amd64.zip", -O, "/tmp/terraform.zip" ]
-  - sudo unzip /tmp/terraform.zip -d /usr/bin/
-  - [ pip, install, ansible ]
-  - [ git, clone ,"https://github.com/dotsenkois/diploma-yandexcloud.git" ]
-  - [ git, clone ,"https://github.com/dotsenkois/diploma-web-app.git" ]
+runcmd:
+  # - sleep 60  
+  # - [ pip, install, ansible ]
+  # - [ git, clone ,"https://github.com/dotsenkois/diploma-yandexcloud.git" ]
+  # - [ git, clone ,"https://github.com/dotsenkois/diploma-web-app.git" ]
+  # - wget "https://storage.yandexcloud.net/bucket-sa-distrib1/terraform_1.3.3_linux_amd64.zip" -O "/tmp/terraform.zip" && sudo unzip /tmp/terraform.zip -d /usr/bin/

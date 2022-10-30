@@ -18,14 +18,14 @@ resource "yandex_compute_instance" "service-instance" {
     }
   }
 
-  metadata = {
-    ssh-keys = "centos:${file("~/.ssh/id_rsa.pub")}"
-  }
   # metadata = {
-  #   user-data = file("${path.module}/01.service-instance-cloud_config.yaml")
-  #   # ssh-keys = "${var.ssh_user}:${file(var.ssh_pub_key)}"
-  #   serial-port-enable = "1"
+  #   ssh-keys = "centos:${file("~/.ssh/id_rsa.pub")}"
   # }
+  metadata = {
+    user-data = file("${path.module}/01.service-instance-cloud_config.yaml")
+    # ssh-keys = "${var.ssh_user}:${file(var.ssh_pub_key)}"
+    serial-port-enable = "1"
+  }
   scheduling_policy {
     preemptible = local.service-instance_scheduling_policy.preemptible
   }
@@ -34,6 +34,10 @@ resource "yandex_compute_instance" "service-instance" {
     nat       = "true"
     ip_address = "192.168.11.20"
   }
+
+  depends_on = [
+    yandex_storage_object.terraform, 
+  ]
 }
 
 resource "yandex_vpc_network" "ansible-service-network" {
@@ -48,40 +52,47 @@ resource "yandex_vpc_subnet" "ansible-service-subnet" {
 }
 
 
+resource "local_file" "inventory" {
+  file_permission = "644"
+  filename = "./ansible/inventory/inventory.yaml"
+  content  = <<-EOT
+---
+all:
+  hosts:
+    ${yandex_compute_instance.service-instance.hostname}:
+      ansible_host: ${yandex_compute_instance.service-instance.network_interface.0.nat_ip_address}
+  vars:
+    ansible_connection_type: paramiko
+    ansible_user: dotsenkois
 
-# resource "local_file" "inventory" {
-#   file_permission = "644"
-#   filename = "./ansible/inventory/inventory.yaml"
-#   content  = <<-EOT
-# ---
-# all:
-#   hosts:
-#     ${yandex_compute_instance.service-instance.hostname}:
-#       ansible_host: ${yandex_compute_instance.service-instance.network_interface.0.nat_ip_address}
-#   vars:
-#     ansible_connection_type: paramiko
-#     ansible_user: dotsenkois
+    service-instance:
+    ${yandex_compute_instance.service-instance.hostname}:
+      ansible_host: ${yandex_compute_instance.service-instance.network_interface.0.nat_ip_address}
 
-#     service-instance:
-#     ${yandex_compute_instance.service-instance.hostname}:
-#       ansible_host: ${yandex_compute_instance.service-instance.network_interface.0.nat_ip_address}
+EOT
 
-# EOT
+  depends_on = [
+    yandex_compute_instance.service-instance,
+  ]
+}
 
-#   depends_on = [
-#     yandex_compute_instance.service-instance,
-#   ]
-# }
+resource "null_resource" "sleep" {
+  provisioner "local-exec" {
+    command = "sleep 50"
+  }
+depends_on = [
+  local_file.inventory
+]
+  }
 
-
-# resource "null_resource" "run-ansible" {
-#   provisioner "local-exec" {
-#     command = "../05.ansible/security.sh; ../05.ansible/pg.sh; "
-#   }
-# depends_on = [
-#   local_file.inventory
-# ]
-#   }
+resource "null_resource" "run-ansible" {
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ./ansible/inventory/inventory.yaml ./ansible/site.yaml --private-key ~/.ssh/netology"
+  }
+depends_on = [
+  null_resource.sleep
+]
+  }
 
 
 

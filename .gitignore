@@ -8,3 +8,4 @@ tf_create_infrasturcture/secrets/*
 **/99.tf_create_infrasturcture/secrets/*
 .kuber/ca.pem
 .kuber/test.kubeconfig
+./02.yc_folders/*

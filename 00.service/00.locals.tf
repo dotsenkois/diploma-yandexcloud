@@ -1,7 +1,7 @@
 locals {
   ssh_user = "dotsenkois"
   ssh_pub_key = "~/.ssh/netology.pub"
-  folder_id = "b1g26degvtq0a70gqtf2"
+  folder_id = "b1g84hu9lr898p2mb1b5"
   service-instance_resources = {
       cores         = "4"
       memory        = "4"
