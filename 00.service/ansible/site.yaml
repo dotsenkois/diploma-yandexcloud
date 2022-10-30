@@ -14,6 +14,7 @@
           - net-tools
           - unzip
           - zip
+          - apt-transport-https
         update_cache: true
 
     - name: Instale ansible
@@ -31,21 +32,40 @@
         src: /tmp/terraform.zip
         dest: /usr/bin
         remote_src: true
+
+
+    - name: Check that diploma-yandexcloud exists
+      ansible.builtin.stat:
+        path: ~/repo/diploma-yandexcloud
+        register: diploma-yandexcloud_exists
     - name: Git clone diploma-yandexcloud
       ansible.builtin.git:
-        repo: https://github.com/dotsenkois/diploma-yandexcloud.git
-        dest: ~/diploma-yandexcloud
+        repo: git@github.com:dotsenkois/diploma-yandexcloud.git
+        dest: ~/repo/diploma-yandexcloud
         version: latest
       register: diploma-yandexcloud
       changed_when: "'Cloning into' in diploma-yandexcloud.stdout"
+      when: not diploma-yandexcloud_exists.stat.exists
 
+
+
+    - name: Check that diploma-web-app exists
+      ansible.builtin.stat:
+        path: ~/repo/diploma-web-app
+        register: diploma-web-app_exists
     - name: Git clone diploma-web-app
       ansible.builtin.git:
-        repo: https://github.com/dotsenkois/diploma-web-app.git
-        dest: ~/diploma-web-app
+        repo: git@github.com:dotsenkois/diploma-web-app.git
+        dest: ~/repo/diploma-web-app
         version: latest
+        key_file: ~/.ssh/netology
+        accept_hostkey: yes 
       register: diploma-web-app
       changed_when: "'Cloning into' in diploma-web-app.stdout"
+      when: not diploma-web-app_exists.stat.exists
+
+
+
   tasks:
     - name: Copy private key to remote hosts
       ansible.builtin.copy:
@@ -87,3 +107,13 @@
         YC_TOKEN: "{{ YC_TOKEN.stdout }}"
       register: bashrc_YC_TOKEN_added
       changed_when: "YC_TOKEN.stdout in bashrc_YC_TOKEN_added.stdout"
+
+    - name: Check that kubectl avaliable
+      ansible.builtin.stat:
+        path: /usr/bin/kubectl
+        register: kubectl_result
+      
+    - name: Dowload kubectl 
+      ansible.builtin.shell:
+        cmd: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && chmod +x kubectl && mv kubectl /usr/bin/kubectl
+        when: not kubectl_result.stat.exists
