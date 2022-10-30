@@ -3,11 +3,9 @@ all:
   hosts:
 # db-master
     db-master-001:
-      ansible_host: 51.250.74.121
+      ansible_host: 84.201.175.97
 # db-slave
-# service-instance
-    service-instance-001:
-      ansible_host: 51.250.77.79
+
 # nat
     nat:
       ansible_host: 62.84.113.87
@@ -20,12 +18,12 @@ all:
 etcd_cluster:
   hosts:
     db-master-001:
-      ansible_host: 51.250.74.121
+      ansible_host: 84.201.175.97
 
 balancers:
   hosts:
     db-master-001:
-      ansible_host: 51.250.74.121
+      ansible_host: 84.201.175.97
 
 postgres_cluster:
   children:
@@ -34,10 +32,4 @@ postgres_cluster:
     db-master-001:
     replica:
       hosts:
-
-service-instance:
-  children:
-    service-instance:
-    service-instance-001:
-      ansible_host: 51.250.77.79
 

@@ -6,13 +6,16 @@ resource "yandex_compute_instance" "jenkins-instance" {
   allow_stopping_for_update = true
 
   resources {
-    cores  = 2
-    memory = 8
+    cores  = local.workspaces[terraform.workspace].jenkins_resources.cores
+    memory = local.workspaces[terraform.workspace].jenkins_resources.memory
+    core_fraction = local.workspaces[terraform.workspace].jenkins_resources.core_fraction
   }
 
   boot_disk {
     initialize_params {
-      image_id = "fd8hsakek5tqhtca63mj"
+      image_id = local.workspaces[terraform.workspace].jenkins_boot_disk.image_id
+      type = local.workspaces[terraform.workspace].jenkins_boot_disk.type
+      size = local.workspaces[terraform.workspace].jenkins_boot_disk.size
     }
   }
 

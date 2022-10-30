@@ -14,7 +14,11 @@ all:
     ${node.hostname}:
       ansible_host: ${node.network_interface.0.nat_ip_address}
 %{endfor~}
-
+# service-instance
+# %{ for node in yandex_compute_instance.service-instance ~} 
+#     ${node.hostname}:
+#       ansible_host: ${node.network_interface.0.nat_ip_address}
+# %{endfor~}
 # nat
     ${yandex_compute_instance.nat.hostname}:
       ansible_host: ${yandex_compute_instance.nat.network_interface.0.nat_ip_address}
@@ -58,6 +62,14 @@ postgres_cluster:
 %{ for node in yandex_compute_instance.db-slave ~} 
     ${node.hostname}:
 %{endfor~}
+
+# service-instance:
+#   children:
+#     service-instance:
+# %{ for node in yandex_compute_instance.service-instance ~} 
+#     ${node.hostname}:
+#       ansible_host: ${node.network_interface.0.nat_ip_address}
+# %{endfor~}
 
 EOT
 

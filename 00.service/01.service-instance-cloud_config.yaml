@@ -12,6 +12,7 @@ packages:
  - net-tools
  - unzip
  - zip
+ - postgresql-client-common
 users:
   - name: dotsenkois
     shell: /bin/bash
