@@ -2,7 +2,7 @@
 // Create SA
 resource "yandex_iam_service_account" "sa-bucket" {
   folder_id = local.buket_folder_id
-  name      = "sa-diploma-dotsenkois"
+  name      = "sa-for-bucket-dotsenkois"
 }
 
 // Grant permissions
