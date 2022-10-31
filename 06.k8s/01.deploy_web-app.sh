@@ -8,22 +8,10 @@ if [[ -z $(cat ~/.bashrc | grep "source <( kubectl completion bash )") ]];then e
 
 kubectl apply -f 01.namespaces.yml
 
+# ingress 
 
-
-# Monitoring
-# Create namespase
-kubectl create namespace monitoring
-
-# Add prometheus-community repo
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-
-# Update helm repo
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
-
-# Install prometeus
-helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring
-
-# #port-forward
-# kubectl port-forward --address 0.0.0.0 svc/prometheus-kube-prometheus-prometheus -n monitoring 9090 &
-
-# kubectl port-forward --address 0.0.0.0 svc/prometheus-kube-state-metrics -n monitoring 8080 &
+helm install ingress-nginx ingress-nginx/ingress-nginx
+# Установите менеджер сертификатов
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml
