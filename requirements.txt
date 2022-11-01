@@ -3,3 +3,4 @@ helm
 jq
 ansible
 git
+qbec

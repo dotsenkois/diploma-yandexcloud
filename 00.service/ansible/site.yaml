@@ -69,6 +69,24 @@
       register: helm
       changed_when: helm.rc != 0
 
+# qbec instalation
+    - name: Dowload qbec-linux-amd64.tar.gz
+      ansible.builtin.get_url:
+        url: https://github.com/splunk/qbec/releases/download/v0.15.2/qbec-linux-amd64.tar.gz
+        dest: /tmp/qbec-linux-amd64.tar.gz
+        mode: '0640'
+
+    - name: Unarchive a qbec-linux-amd64
+      become: true
+      ansible.builtin.unarchive:
+        src: /tmp//tmp/qbec-linux-amd64.tar.gz
+        dest: /usr/local/bin
+        remote_src: true
+    - name: Qbec completion
+      ansible.builtin.shell:
+        cmd: "qbec completion | sudo tee /etc/bash_completion.d/qbec"
+      register: qbec_is_installed
+      changed_when: qbec_is_installed.rc != 0 
 
 
   tasks:
