@@ -2,12 +2,12 @@
 all:
   hosts:
     remote:
-      ansible_host: 51.250.14.227
+      ansible_host: 178.154.254.30
   vars:
     ansible_connection_type: paramiko
     ansible_user: dotsenkois
 
     service-instance:
     remote:
-      ansible_host: 51.250.14.227
+      ansible_host: 178.154.254.30
 

@@ -1,20 +1,20 @@
 #cloud-config
 version: v1
 ssh_pwauth: no
-packages_update: true
-packages_upgrade: true
-packages:
- - git
- - docker-compose
- - docker.io
- - python3-pip
- - htop
- - net-tools
- - unzip
- - zip
- - postgresql-client-common
- - jq
- - jsonnet
+# packages_update: true
+# packages_upgrade: true
+# packages:
+#  - git
+#  - docker-compose
+#  - docker.io
+#  - python3-pip
+#  - htop
+#  - net-tools
+#  - unzip
+#  - zip
+#  - postgresql-client-common
+#  - jq
+#  - jsonnet
 users:
   - name: dotsenkois
     shell: /bin/bash

@@ -15,43 +15,56 @@
           - unzip
           - zip
           - apt-transport-https
+          - postgresql-client-common
+          - jq
+          - jsonnet
         update_cache: true
 
     - name: Instale ansible
       ansible.builtin.pip:
         name:
           - ansible
+
+    - name: Check that terraform exists
+      ansible.builtin.stat:
+        path: /usr/bin/terraform
+      register: terrafrom_exists
+
     - name: Dowload terraform.zip
       ansible.builtin.get_url:
         url: https://storage.yandexcloud.net/bucket-sa-distrib1/terraform_1.3.3_linux_amd64.zip
         dest: /tmp/terraform.zip
         mode: '0640'
+      when: not terrafrom_exists.stat.exists
+
     - name: Unarchive a terraform
       become: true
       ansible.builtin.unarchive:
         src: /tmp/terraform.zip
         dest: /usr/bin
         remote_src: true
+      when: not terrafrom_exists.stat.exists
 
 
     - name: Check that diploma-yandexcloud exists
       ansible.builtin.stat:
         path: ~/repo/diploma-yandexcloud
-        register: diploma-yandexcloud_exists
+      register: diploma_yandexcloud_exists
 
     - name: Git clone diploma-yandexcloud
       ansible.builtin.git:
         repo: git@github.com:dotsenkois/diploma-yandexcloud.git
         dest: ~/repo/diploma-yandexcloud
         version: latest
-      register: diploma-yandexcloud
-      changed_when: "'Cloning into' in diploma-yandexcloud.stdout"
-      when: not diploma-yandexcloud_exists.stat.exists
+      register: diploma_yandexcloud
+      changed_when: "'Cloning into' in diploma_yandexcloud.stdout"
+      when: not diploma_yandexcloud_exists.stat.exists
 
     - name: Check that diploma-web-app exists
       ansible.builtin.stat:
         path: ~/repo/diploma-web-app
-        register: diploma-web-app_exists
+      register: diploma_web_app_exists
+
     - name: Git clone diploma-web-app
       ansible.builtin.git:
         repo: git@github.com:dotsenkois/diploma-web-app.git
@@ -59,9 +72,10 @@
         version: latest
         key_file: ~/.ssh/netology
         accept_hostkey: true
-      register: diploma-web-app
-      changed_when: "'Cloning into' in diploma-web-app.stdout"
-      when: not diploma-web-app_exists.stat.exists
+      register: diploma_web_app
+      changed_when: "'Cloning into' in diploma_web_app.stdout"
+      when: not diploma_web_app_exists.stat.exists
+
     - name: Install helm
       ansible.builtin.shell:
         cmd: "curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash"

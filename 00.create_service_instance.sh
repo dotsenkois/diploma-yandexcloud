@@ -34,7 +34,7 @@ function 00.service(){
     fi
     # pwd
     echo "ID каталога $id"
-    # echo -n $id> ./02.yc_folders/$service_folder
+    echo -n $id> ./02.yc_folders/$service_folder
     sed -i "s/folder_id =.*/folder_id = \"$id\"/" ./00.service/00.locals.tf 
   done
   cd ./00.service
