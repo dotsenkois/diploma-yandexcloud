@@ -1,7 +1,9 @@
 ## Задание 1. Создание статичного сайта с помощью бакета 
 
 resource "yandex_iam_service_account" "bucket-sa-distrib" {
-  name      = "dotsenkois-distrs-storage"
+  name      = "dotsenkois1-distrs-storage"
+  folder_id = local.folder_id
+
 }
 
 // Назначение роли сервисному аккаунту
