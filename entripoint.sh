@@ -104,8 +104,8 @@ yc config set token $YC_TOKEN
 yc config set cloud-id $YC_CLOUD_ID
 
 # переменные для создание ресурсов
-workspaces=(prod stage) # Название  рабочих пространств и основных каталогов облака
-service_folders=(bucket) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
+workspaces=(dotsenkois-prod dotsenkois-stage) # Название  рабочих пространств и основных каталогов облака
+service_folders=(dotsenkois-bucket) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
 
 # Создать rsa ключ и поменять его в файлах cloud-init.yaml
 ./00.find_and_replace_rsa.sh
