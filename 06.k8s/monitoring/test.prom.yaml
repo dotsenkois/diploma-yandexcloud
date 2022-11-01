@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-kube-prometheus-prometheus
+  namespace: monitoring
+  uid: d82b5b1e-cd3f-4445-89a6-963dc4a870e7
+  resourceVersion: '48295'
+  creationTimestamp: '2022-11-01T03:18:42Z'
+  labels:
+    app: kube-prometheus-stack-prometheus
+    app.kubernetes.io/instance: prometheus
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    app.kubernetes.io/version: 41.7.2
+    chart: kube-prometheus-stack-41.7.2
+    heritage: Helm
+    release: prometheus
+    self-monitor: 'true'
+  annotations:
+    meta.helm.sh/release-name: prometheus
+    meta.helm.sh/release-namespace: monitoring
+  managedFields:
+    - manager: helm
+      operation: Update
+      apiVersion: v1
+      time: '2022-11-01T03:18:42Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:meta.helm.sh/release-name: {}
+            f:meta.helm.sh/release-namespace: {}
+          f:labels:
+            .: {}
+            f:app: {}
+            f:app.kubernetes.io/instance: {}
+            f:app.kubernetes.io/managed-by: {}
+            f:app.kubernetes.io/part-of: {}
+            f:app.kubernetes.io/version: {}
+            f:chart: {}
+            f:heritage: {}
+            f:release: {}
+            f:self-monitor: {}
+        f:spec:
+          f:ports:
+            .: {}
+            k:{"port":9090,"protocol":"TCP"}:
+              .: {}
+              f:name: {}
+              f:port: {}
+              f:protocol: {}
+              f:targetPort: {}
+          f:selector:
+            .: {}
+            f:app.kubernetes.io/name: {}
+            f:prometheus: {}
+          f:sessionAffinity: {}
+          f:type: {}
+  selfLink: /api/v1/namespaces/monitoring/services/prometheus-kube-prometheus-prometheus
+status:
+  loadBalancer: {}
+spec:
+  ports:
+    - name: http-web
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
+  selector:
+    app.kubernetes.io/name: prometheus
+    prometheus: prometheus-kube-prometheus-prometheus
+  type: LoadBalancer
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack

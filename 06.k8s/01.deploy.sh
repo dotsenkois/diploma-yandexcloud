@@ -26,8 +26,8 @@ helm install prometheus prometheus-community/kube-prometheus-stack --namespace m
 }
 
 function deploy_web-app(){
-    kubectl apply -f web-app/01.namespaces.yml 
-    kubectl apply -f web-app/ds.backend.yml
+    kubectl apply -f web-app/01.namespaces.yaml 
+    kubectl apply -f web-app/ds.backend.yaml
     kubectl apply -f web-app/ds.frontend.yaml
 }
 

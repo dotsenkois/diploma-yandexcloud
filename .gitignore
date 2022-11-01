@@ -16,3 +16,4 @@ tf_create_infrasturcture/secrets/*
 .kuber/cluster_id
 05.docker/registry_name
 05.ansible/inventory/inventory.yaml
+.kuber/cluster_id

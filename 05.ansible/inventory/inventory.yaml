@@ -3,12 +3,12 @@ all:
   hosts:
 # db-master
     db-master-001:
-      ansible_host: 178.154.252.130
+      ansible_host: 51.250.10.240
 # db-slave
 
 # nat
     nat:
-      ansible_host: 51.250.87.39
+      ansible_host: 51.250.95.131
 
   vars:
     ansible_connection_type: paramiko
@@ -18,12 +18,12 @@ all:
 etcd_cluster:
   hosts:
     db-master-001:
-      ansible_host: 178.154.252.130
+      ansible_host: 51.250.10.240
 
 balancers:
   hosts:
     db-master-001:
-      ansible_host: 178.154.252.130
+      ansible_host: 51.250.10.240
 
 postgres_cluster:
   children:
