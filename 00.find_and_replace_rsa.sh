@@ -1,5 +1,7 @@
 #!/bin/bash
-
+# Скрипт создает проверяет наличие rsa-ключа с опредленным именем
+# (по умолчанию netology), создает его в случае отсутствия
+# и изменяет его во всех файлах cloud-init.yaml 
 function new_rsa_key(){
 echo "Проверяю наличе ключа для netology"
 if [ ! -f ~/.ssh/netology ]; then 
@@ -12,6 +14,5 @@ fi
 
 new_rsa_key
 rsa=$(cat ~/.ssh/netology.pub)
-#echo $rsa
 find . -name *cloud_config.yaml -exec sed -i "s,- ssh-rsa.*,- $rsa,"  {} \;
 

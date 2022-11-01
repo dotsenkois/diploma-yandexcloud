@@ -1,0 +1,10 @@
+apiVersion: qbec.io/v1alpha1
+kind: App
+metadata:
+  name: dotsenkois-web-app
+spec:
+  environments:
+    default:
+      defaultNamespace: default
+      server: https://51.250.79.129
+  vars: {}

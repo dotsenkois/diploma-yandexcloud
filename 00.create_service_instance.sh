@@ -39,13 +39,7 @@ function 00.service(){
   done
   cd ./00.service
   terraform init -reconfigure && terraform apply --auto-approve
-  # ansible-playbook 
-
 }
-
-# function run_ansible(){
-# }
-
 
 function main(){
 
@@ -54,7 +48,7 @@ yc config set token $YC_TOKEN
 yc config set cloud-id $YC_CLOUD_ID
 
 # переменные для создание ресурсов
-service_folders=(service) # каталог для создания s3, в котором будет храниться состояние основной конфигурации terraform
+service_folders=(service)
 ./00.find_and_replace_rsa.sh
 
 00.install_yc
