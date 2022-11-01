@@ -24,7 +24,7 @@ users:
     primary_group: dotsenkois
     groups: root, docker
     ssh_authorized_keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCcdF/ZrY6ot17fMyUBwaw9eVcYvKu53emT2/AylArwh/sPd8hQJxktBT41Uu7oLQsIdt0v0ZtosSQFUSJPXfNFnlpUHPlT7/BRbfigIlvlGwqGF7uq3SrlKJKDI0S5+RDEdO3tFnGlNHuUiHwrMGzWabU7qNae/dSX6LPA7aJc38B3J8ZF22mFL01/qdpkN6lkQWdoILhK9EskdD2XPu4JeTpND+/IXMMpTPf8rhkWL0+rb3MdLyXnPa44fMpd9UYLwUVd9QIV96pXskso+VC6NZHCNH6YXLuP6XxrQr7PAph1lIu0MqhAzLELx/N6A10BLoNiI+cas79KEjR+rNghH6w/DH65z5cecJYFmqpqv4buIobLRHas8s00047M+PLqKyGqL9zfUWIkbjDNd7fp1iNieKEKCY5lPMNIG1Y6o5zZSlc3tOPQ2VNB67QsamC+jxX0rL2weIEvSzR3eb4wDNJGDPZC9rOJb0BQ0MKs8UUpMhw+cCRlXOI+L4kzuYk= dotsenkois@dotsenkois-vm
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3bXWZ0ilGnNS1Q1VMO06WScGKTIDUV0jlIdT88h+rnN3WBayAofWpIT/KViArFRk4/IKkghwPHllos9MF2UPEiUz9qdGjxJdSxey6WWVwCf1GmENQivUBklSZX1MP3SThwFk1TRpWnrW/+od0fpRZbTRJLuLKWUhDacVe7xNTVWp+LhnITKEzkAqOdizkLoXeI2+GkJnrjnkWU0H4yno1US97mFnQh0A/R7Say16Q5KXUtex5caoShOsOeKcGj71OkBoKWRMN5AZ+kvgk+FOJcZ3YF8245dtATmBPejlJsjv4xHaCtg48kJfRKRzcJPZcZOM0hplTkMzcUA2Bav438kDZuTFE8nM2PlDLRuTOdeUHh4+nWxEl3cjzN2+0rh5mRDClQMgnt1oTyCqIASXr5rm6m3NKJrz441SOyi0ZFHt2G7qEJg3GQhNu5OjnSYeDTzK0kC9ztytC/rMyVMmIkz7v4O/4SCQuj0H65uLaVtVKYUj0VKinAS9fm8tFDXE= dotsenkois@dotsenkois-vm
 runcmd:
   - echo "alias k=kubectl" >> ~/.bashrc 
   - echo "source <( kubectl completion bash | sed s/kubectl/k/g )" >> ~/.bashrc 
