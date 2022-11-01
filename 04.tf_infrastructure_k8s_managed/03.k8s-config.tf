@@ -18,7 +18,6 @@ resource "null_resource" "kube-staticonfig" {
   }
 
   depends_on = [
-    yandex_kubernetes_cluster.k8s-netology,
-    yandex_kubernetes_node_group.k8s-netology-node-group
+    null_resource.kubeconfig,
   ]
 }
