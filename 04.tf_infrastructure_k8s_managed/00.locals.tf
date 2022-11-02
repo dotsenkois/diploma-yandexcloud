@@ -1,6 +1,6 @@
 locals {
     workspaces = {
-        stage = {
+        dotsenkois-stage = {
             folder_id =  file("../02.yc_folders/dotsenkois-stage")
             scale_policy = {
                 auto_scale ={
@@ -82,8 +82,8 @@ locals {
         }
 
 
-        prod = {
-            folder_id =  file("../02.yc_folders/prod")
+        dotsenkois-prod = {
+            folder_id =  file("../02.yc_folders/dotsenkois-prod")
             scale_policy = {
                 auto_scale ={
                     min     = 3

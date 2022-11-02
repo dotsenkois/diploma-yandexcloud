@@ -113,6 +113,7 @@ service_folders=(dotsenkois-bucket) # каталог для создания s3,
 get_my_external_ip
 configure_terraform
 00.install_yc
+
 01.tf_cloud_prepare
 04.tf_infrastructure
 

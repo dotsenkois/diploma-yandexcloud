@@ -44,4 +44,7 @@ kms_provider {
   }
 
   release_channel = "STABLE"
+  depends_on = [
+  null_resource.configure-depoyment
+]
 }
