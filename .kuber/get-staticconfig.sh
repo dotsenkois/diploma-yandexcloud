@@ -43,6 +43,5 @@ kubectl config set-context default \
 kubectl config use-context default \
 --kubeconfig=test.kubeconfig
 
-# Проверьте резульатат
-
-kubectl get namespace --kubeconfig=test.kubeconfig
+# Запуск развертывания мониторинга и приложения
+cd ../06.k8s && ./01.deploy.sh 

@@ -21,7 +21,7 @@ locals {
             db_boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"
                 type     = "network-hdd"
-                size     = "20"
+                size     = "10"
             }
             db_scheduling_policy = {
                 preemptible = "true"
@@ -38,12 +38,12 @@ locals {
                 core_fraction = "5"
             }
             jenkins_boot_disk = {
-                image_id = "fd8f1tik9a7ap9ik2dg1"
+                image_id = "fd8n2l6igots3v1qfptm"
                 type     = "network-hdd"
-                size     = "20"
+                size     = "10"
             }
             jenkins_scheduling_policy = {
-                preemptible = "true"
+                preemptible = "false"
             }
 
             # gitlab_runner
@@ -57,7 +57,7 @@ locals {
             gitlab_runner_boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"
                 type     = "network-hdd"
-                size     = "20"
+                size     = "10"
             }
             gitlab_runner_scheduling_policy = {
                 preemptible = "true"

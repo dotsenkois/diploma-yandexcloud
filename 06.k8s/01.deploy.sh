@@ -9,7 +9,9 @@ if [[ -z $(cat ~/.bashrc | grep "source <( kubectl completion bash )") ]];then e
 }
 
 function deploy_monitoring(){
-    # Monitoring
+
+if [[ -z $(kubectl get ns |grep monitoring) ]];then 
+# Monitoring
 # Create namespase
 kubectl create namespace monitoring
 
@@ -21,7 +23,10 @@ helm repo update
 
 # Install prometeus
 helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring
+fi
 
+kubectl delete -f monitoring/grafana-service_modified.yaml
+kubectl apply -f monitoring/grafana-service_modified.yaml
 
 }
 
@@ -37,8 +42,6 @@ function main(){
 autocomplition
 deploy_web-app
 deploy_monitoring
-
-
 }
 
 main

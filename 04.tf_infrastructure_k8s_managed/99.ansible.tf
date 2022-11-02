@@ -66,7 +66,7 @@ EOT
     yandex_compute_instance.db-slave,
     yandex_compute_instance.nat,
     # yandex_compute_instance.service-instance,
-    yandex_compute_instance.jenkins-instance,
+    # yandex_compute_instance.jenkins-instance,
   ]
 }
 

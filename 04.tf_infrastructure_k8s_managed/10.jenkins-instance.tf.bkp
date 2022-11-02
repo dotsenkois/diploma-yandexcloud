@@ -30,6 +30,7 @@ resource "yandex_compute_instance" "jenkins-instance" {
   }
 
   scheduling_policy {
-    preemptible = "true"
+    preemptible = local.workspaces[terraform.workspace].jenkins_scheduling_policy.preemptible
+
   }
 }

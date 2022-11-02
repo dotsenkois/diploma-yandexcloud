@@ -1,0 +1,19 @@
+# resource "yandex_dns_zone" "tes" {
+#   name        = "dotsenkois.local"
+#   description = "Test private zone"
+
+#   labels = {
+#     label1 = "test-private"
+#   }
+
+#   public           = false
+#   private_networks = [yandex_vpc_network.k8s-network.id]
+# }
+
+# resource "yandex_dns_recordset" "rs1" {
+#   zone_id = yandex_dns_zone.zone1.id
+#   name    = "srv.example.com."
+#   type    = "A"
+#   ttl     = 200
+#   data    = ["10.1.0.1"]
+# }
