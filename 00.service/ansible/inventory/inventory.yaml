@@ -1,0 +1,13 @@
+---
+all:
+  hosts:
+    remote:
+      ansible_host: 51.250.85.10
+  vars:
+    ansible_connection_type: paramiko
+    ansible_user: dotsenkois
+
+    service-instance:
+    remote:
+      ansible_host: 51.250.85.10
+

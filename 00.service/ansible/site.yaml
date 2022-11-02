@@ -42,3 +42,19 @@
         YC_TOKEN: "{{ YC_TOKEN.stdout }}"
       register: bashrc_YC_TOKEN_added
       changed_when: "YC_TOKEN.stdout in bashrc_YC_TOKEN_added.stdout"
+
+
+    - name: Clone a diploma-yandexcloud
+      ansible.builtin.git:
+        repo: git@github.com:dotsenkois/diploma-yandexcloud.git
+        dest: ~/repo/diploma-yandexcloud/
+        clone: true
+        accept_hostkey: true
+        key_file: ~/.ssh/netology
+        version: main
+
+    # - name: Run deploy
+    #   ansible.builtin.command:
+    #     cmd: ./repo/diploma-yandexcloud/entripoint.sh
+    #   register: entripoint
+    #   changed_when: "'YC' in entripoint.stdout"

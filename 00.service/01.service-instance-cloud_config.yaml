@@ -17,24 +17,27 @@ packages:
   - jq
   - jsonnet
 users:
-  - name: ubuntu
+  - name: dotsenkois
     shell: /bin/bash
     sudo: ALL=(ALL) NOPASSWD:ALL    
     lock_passwd: false
     passwd: $6$rounds=4096$7SUAIMSGEVz7PUb4$6xyaI.DarGCS8X4Qb1fmrxEPx2DVTxTdcNJQgU1gVQINgTglIrgs2XBJ5NVIs7K8N2XBxWBShAXvyx1PeqwJI/
-    primary_group: ubuntu
+    primary_group: dotsenkois
     groups: root, docker
-runcmd:
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3bXWZ0ilGnNS1Q1VMO06WScGKTIDUV0jlIdT88h+rnN3WBayAofWpIT/KViArFRk4/IKkghwPHllos9MF2UPEiUz9qdGjxJdSxey6WWVwCf1GmENQivUBklSZX1MP3SThwFk1TRpWnrW/+od0fpRZbTRJLuLKWUhDacVe7xNTVWp+LhnITKEzkAqOdizkLoXeI2+GkJnrjnkWU0H4yno1US97mFnQh0A/R7Say16Q5KXUtex5caoShOsOeKcGj71OkBoKWRMN5AZ+kvgk+FOJcZ3YF8245dtATmBPejlJsjv4xHaCtg48kJfRKRzcJPZcZOM0hplTkMzcUA2Bav438kDZuTFE8nM2PlDLRuTOdeUHh4+nWxEl3cjzN2+0rh5mRDClQMgnt1oTyCqIASXr5rm6m3NKJrz441SOyi0ZFHt2G7qEJg3GQhNu5OjnSYeDTzK0kC9ztytC/rMyVMmIkz7v4O/4SCQuj0H65uLaVtVKYUj0VKinAS9fm8tFDXE= dotsenkois@dotsenkois-vm
+bootcmd:
   - sleep 120
   - echo "alias k=kubectl" >> ~/.bashrc 
   - echo "source <( kubectl completion bash | sed s/kubectl/k/g )" >> ~/.bashrc 
   - echo "source <( kubectl completion bash )" >> ~/.bashrc 
   - [ pip, install, ansible ]
-  - if [ ! -f /usr/bin/terraform ]; then wget https://storage.yandexcloud.net/bucket-sa-distrib1/terraform_1.3.3_linux_amd64.zip -O /tmp/terraform.zip && sudo unzip /tmp/terraform.zip /usr/bin/terraform; fi
+  - if [ ! -f /usr/bin/terraform ]; then wget https://storage.yandexcloud.net/bucket-sa-distrib1/terraform_1.3.3_linux_amd64.zip -O /tmp/terraform.zip && sudo unzip /tmp/terraform.zip -d /usr/bin/terraform; fi
   - if [ ! -f /usr/local/bin/helm ]; then curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash; fi
   - if [ ! -f /usr/bin/qbec ]; then wget https://github.com/splunk/qbec/releases/download/v0.15.2/qbec-linux-amd64.tar.gz -O /tmp/qbec-linux-amd64.tar.gz && sudo tar zxvf /tmp/qbec-linux-amd64.tar.gz -C /usr/bin/; fi
   - qbec completion | sudo tee /etc/bash_completion.d/qbec
   - if [ ! -f /usr/bin/kubectl ]; then curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && chmod +x kubectl && sudo mv kubectl /usr/bin/kubectl; fi
+  - curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
   - mkdir ~/repo
 
   # - [ git, clone ,"https://github.com/dotsenkois/diploma-yandexcloud.git" ]

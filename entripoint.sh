@@ -86,7 +86,7 @@ for workspace in "${workspaces[@]}"
     check=""
 done    
 # Выбор пространства stage
-terraform workspace select $(ls ../02.yc_folders/stage* --sort=time |xargs -n 1 basename|head -n 1)
+terraform workspace select $(ls ../02.yc_folders/*stage* --sort=time |xargs -n 1 basename|head -n 1)
 # запуск развертывания
 terraform apply --auto-approve
 }

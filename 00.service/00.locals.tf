@@ -10,7 +10,7 @@ locals {
   service-instance_boot_disk = {
       image_id = "fd8f1tik9a7ap9ik2dg1"
       type     = "network-hdd"
-      size     = "15"
+      size     = "10"
   }
   service-instance_scheduling_policy = {
       preemptible = "false"
