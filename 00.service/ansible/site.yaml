@@ -12,7 +12,11 @@
         src: "~/.ssh/netology.pub"
         dest: "~/.ssh/netology.pub"
         mode: "600"
-
+    - name: Copy ssh config
+      ansible.builtin.copy:
+        src: "./templates/config"
+        dest: "~/.ssh/config"
+        mode: "600"
     - name: Echo YC_TOKEN
       ansible.builtin.shell:
         cmd: "echo $YC_TOKEN"

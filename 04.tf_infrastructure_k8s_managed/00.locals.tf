@@ -1,7 +1,7 @@
 locals {
     workspaces = {
         stage = {
-            folder_id =  file("../02.yc_folders/stage")
+            folder_id =  file("../02.yc_folders/dotsenkois-stage")
             scale_policy = {
                 auto_scale ={
                     min     = 1
