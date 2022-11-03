@@ -1,0 +1,13 @@
+#cloud-config
+ssh_pwauth: no
+users:
+  - name: dotsenkois
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL    
+    passwd: $6$rounds=4096$2lnfl.BvbQyhFZDJ$uSLTNFXlqGV0kf6nIiE3nMJHJ.XPch5WF5OWg2T5tw8qSw3yNvNTMtKepItJowUM.emgaYd1baoyoLQI6GPgJ/
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3bXWZ0ilGnNS1Q1VMO06WScGKTIDUV0jlIdT88h+rnN3WBayAofWpIT/KViArFRk4/IKkghwPHllos9MF2UPEiUz9qdGjxJdSxey6WWVwCf1GmENQivUBklSZX1MP3SThwFk1TRpWnrW/+od0fpRZbTRJLuLKWUhDacVe7xNTVWp+LhnITKEzkAqOdizkLoXeI2+GkJnrjnkWU0H4yno1US97mFnQh0A/R7Say16Q5KXUtex5caoShOsOeKcGj71OkBoKWRMN5AZ+kvgk+FOJcZ3YF8245dtATmBPejlJsjv4xHaCtg48kJfRKRzcJPZcZOM0hplTkMzcUA2Bav438kDZuTFE8nM2PlDLRuTOdeUHh4+nWxEl3cjzN2+0rh5mRDClQMgnt1oTyCqIASXr5rm6m3NKJrz441SOyi0ZFHt2G7qEJg3GQhNu5OjnSYeDTzK0kC9ztytC/rMyVMmIkz7v4O/4SCQuj0H65uLaVtVKYUj0VKinAS9fm8tFDXE= dotsenkois@dotsenkois-vm
+    primary_group: dotsenkois
+    groups: root, docker
+packages:
+  - docker.io

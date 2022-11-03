@@ -10,75 +10,105 @@ locals {
                 }
             }
             #db
-            db_master_count = 1
-            db_slave_count = 0
+            db = {
+            master_count = 1
+            slave_count = 0
 
-            db_resources = {
+            resources = {
                 cores         = "2"
                 memory        = "4"
                 core_fraction = "5"
             }
-            db_boot_disk = {
+            boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"
                 type     = "network-hdd"
                 size     = "10"
             }
-            db_scheduling_policy = {
+            scheduling_policy = {
                 preemptible = "true"
             }
-
-            #CI/CD
-
-            # jenkins
-            jenkins_count = 1
-        
-            jenkins_resources = {
-                cores         = "2"
-                memory        = "4"
-                core_fraction = "5"
-            }
-            jenkins_boot_disk = {
-                image_id = "fd8n2l6igots3v1qfptm"
-                type     = "network-hdd"
-                size     = "10"
-            }
-            jenkins_scheduling_policy = {
-                preemptible = "false"
-            }
-
-            # gitlab_runner
-            gitlab_runner_count = 1
-
-            gitlab_runner_resources = {
-                cores         = "2"
-                memory        = "4"
-                core_fraction = "5"
-            }
-            gitlab_runner_boot_disk = {
-                image_id = "fd8f1tik9a7ap9ik2dg1"
-                type     = "network-hdd"
-                size     = "10"
-            }
-            gitlab_runner_scheduling_policy = {
-                preemptible = "true"
             }
 
             # service-instance
-            service-instance_count = 1
 
-            service-instance_resources = {
+            service-instance = {
+            count = 1
+
+            resources = {
                 cores         = "2"
                 memory        = "4"
                 core_fraction = "5"
             }
-            service-instance_boot_disk = {
+            boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"
                 type     = "network-hdd"
                 size     = "20"
             }
-            service-instance_scheduling_policy = {
+            scheduling_policy = {
                 preemptible = "true"
             }
+            }
+            #CI/CD
+
+            # jenkins
+            jenkins = {
+            count = 1
+        
+            resources = {
+                cores         = "2"
+                memory        = "4"
+                core_fraction = "5"
+            }
+            boot_disk = {
+                image_id = "fd8n2l6igots3v1qfptm"
+                type     = "network-hdd"
+                size     = "10"
+            }
+            scheduling_policy = {
+                preemptible = "false"
+            }
+            }
+            
+            # teamcity
+            teamcity = {
+            count = 1
+            resources = {
+                cores         = "2"
+                memory        = "4"
+                core_fraction = "5"
+            }
+            boot_disk = {
+                image_id = "fd8n2l6igots3v1qfptm"
+                type     = "network-hdd"
+                size     = "10"
+            }
+            scheduling_policy = {
+                preemptible = "false"
+            }
+            }
+
+            # gitlab
+            gitlab = {
+            count = 1
+            resources = {
+                cores         = "2"
+                memory        = "4"
+                core_fraction = "5"
+            }
+            boot_disk = {
+                image_id = "fd8n2l6igots3v1qfptm"
+                type     = "network-hdd"
+                size     = "10"
+            }
+            scheduling_policy = {
+                preemptible = "false"
+            }
+            }
+
+
+
+
+
         }
 
 
