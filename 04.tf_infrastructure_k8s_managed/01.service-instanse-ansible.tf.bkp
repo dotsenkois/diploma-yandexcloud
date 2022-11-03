@@ -21,7 +21,7 @@ EOT
 
 resource "null_resource" "run_service-instanse-ansible" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../05.service-instanse-ansible/inventory.yaml ../05.service-instanse-ansible/site.yaml"
+    command = "ANSIBLE_FORCE_COLOR=1 -i ../05.service-instanse-ansible/inventory.yaml ../05.service-instanse-ansible/site.yaml"
   }
 depends_on = [
   local_file.service-instanse-ansible

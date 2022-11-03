@@ -1,7 +1,7 @@
 
 resource "yandex_compute_instance" "db-master" {
 
-  count       = local.workspaces[terraform.workspace].db_master_count
+  count       = local.workspaces[terraform.workspace].db.master_count
   name        = format("db-master-%03d", count.index +1)
   # platform_id = var.yc_instances_control-plane
   hostname    = format("db-master-%03d", count.index +1)
@@ -10,22 +10,22 @@ resource "yandex_compute_instance" "db-master" {
 
 
   resources {
-    cores         = local.workspaces[terraform.workspace].db_resources.cores
-    memory        = local.workspaces[terraform.workspace].db_resources.memory
-    core_fraction = local.workspaces[terraform.workspace].db_resources.core_fraction
+    cores         = local.workspaces[terraform.workspace].db.resources.cores
+    memory        = local.workspaces[terraform.workspace].db.resources.memory
+    core_fraction = local.workspaces[terraform.workspace].db.resources.core_fraction
   }
   boot_disk {
     initialize_params {
-      image_id = local.workspaces[terraform.workspace].db_boot_disk.image_id
-      type     = local.workspaces[terraform.workspace].db_boot_disk.type
-      size     = local.workspaces[terraform.workspace].db_boot_disk.size
+      image_id = local.workspaces[terraform.workspace].db.boot_disk.image_id
+      type     = local.workspaces[terraform.workspace].db.boot_disk.type
+      size     = local.workspaces[terraform.workspace].db.boot_disk.size
     }
   }
   metadata = {
     user-data = file("${path.module}/02.db-cluster-cloud_config.yaml")
   }
   scheduling_policy {
-    preemptible = local.workspaces[terraform.workspace].db_scheduling_policy.preemptible
+    preemptible = local.workspaces[terraform.workspace].db.scheduling_policy.preemptible
   }
   network_interface {
     subnet_id = yandex_vpc_subnet.db-subnet.id
@@ -37,7 +37,7 @@ resource "yandex_compute_instance" "db-master" {
 
 resource "yandex_compute_instance" "db-slave" {
 
-  count       = local.workspaces[terraform.workspace].db_slave_count
+  count       = local.workspaces[terraform.workspace].db.slave_count
   name        = format("db-slave-%03d", count.index +1 )
   # platform_id = var.yc_instances_control-plane
   hostname    = format("db-slave-%03d", count.index +1 )
@@ -46,22 +46,22 @@ resource "yandex_compute_instance" "db-slave" {
 
 
   resources {
-    cores         = local.workspaces[terraform.workspace].db_resources.cores
-    memory        = local.workspaces[terraform.workspace].db_resources.memory
-    core_fraction = local.workspaces[terraform.workspace].db_resources.core_fraction
+    cores         = local.workspaces[terraform.workspace].db.resources.cores
+    memory        = local.workspaces[terraform.workspace].db.resources.memory
+    core_fraction = local.workspaces[terraform.workspace].db.resources.core_fraction
   }
   boot_disk {
     initialize_params {
-      image_id = local.workspaces[terraform.workspace].db_boot_disk.image_id
-      type     = local.workspaces[terraform.workspace].db_boot_disk.type
-      size     = local.workspaces[terraform.workspace].db_boot_disk.size
+      image_id = local.workspaces[terraform.workspace].db.boot_disk.image_id
+      type     = local.workspaces[terraform.workspace].db.boot_disk.type
+      size     = local.workspaces[terraform.workspace].db.boot_disk.size
     }
   }
   metadata = {
     user-data = file("${path.module}/02.db-cluster-cloud_config.yaml")
   }
   scheduling_policy {
-    preemptible = local.workspaces[terraform.workspace].db_scheduling_policy.preemptible
+    preemptible = local.workspaces[terraform.workspace].db.scheduling_policy.preemptible
   }
   network_interface {
     subnet_id = yandex_vpc_subnet.db-subnet.id

@@ -1,0 +1,109 @@
+data "yandex_compute_image" "coi" {
+  family = "container-optimized-image"
+}
+
+
+resource "yandex_compute_instance" "teamcity-master-instance" {
+  name        = "teamcity-master-instance"
+  hostname = "teamcity-master-instance"
+  platform_id = "standard-v1"
+  zone        = "ru-central1-a"
+  allow_stopping_for_update = true
+
+  resources {
+    cores  = local.workspaces[terraform.workspace].teamcity.resources.cores
+    memory = local.workspaces[terraform.workspace].teamcity.resources.memory
+    core_fraction = local.workspaces[terraform.workspace].teamcity.resources.core_fraction
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = data.yandex_compute_image.coi.id
+    }
+  }
+
+  network_interface {
+    subnet_id = yandex_vpc_subnet.CICD-subnet.id
+    ip_address = "192.168.10.153"
+    nat       = true
+  }
+
+  metadata = {
+    user-data = file("${path.module}/10.teamcity-instance-cloud_config.yaml")
+  }
+
+  scheduling_policy {
+    preemptible = local.workspaces[terraform.workspace].teamcity.scheduling_policy.preemptible
+
+  }
+}
+
+resource "yandex_compute_instance" "teamcity-runner-instance" {
+  name        = "teamcity-runner-instance"
+  hostname = "teamcity-runner-instance"
+  platform_id = "standard-v1"
+  zone        = "ru-central1-a"
+  allow_stopping_for_update = true
+
+  resources {
+    cores  = local.workspaces[terraform.workspace].teamcity.resources.cores
+    memory = local.workspaces[terraform.workspace].teamcity.resources.memory
+    core_fraction = local.workspaces[terraform.workspace].teamcity.resources.core_fraction
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = local.workspaces[terraform.workspace].teamcity.boot_disk.image_id
+      type = local.workspaces[terraform.workspace].teamcity.boot_disk.type
+      size = local.workspaces[terraform.workspace].teamcity.boot_disk.size
+    }
+  }
+
+  network_interface {
+    subnet_id = yandex_vpc_subnet.CICD-subnet.id
+    ip_address = "192.168.10.154"
+    nat       = true
+  }
+
+  metadata = {
+    user-data = file("${path.module}/10.teamcity-instance-cloud_config.yaml")
+  }
+
+  scheduling_policy {
+    preemptible = local.workspaces[terraform.workspace].teamcity.scheduling_policy.preemptible
+
+  }
+}
+
+
+resource "local_file" "teamcity-inventory" {
+  filename = "../07.CICD/infrastructure/inventory/cicd/hosts.yml"
+  content  = <<-EOT
+---
+all:
+  hosts:
+# team-city
+      ansible_host: ${yandex_compute_instance.teamcity-instance.network_interface.0.nat_ip_address}
+teamcity:
+  hosts:
+  vars:
+    ansible_connection_type: paramiko
+    ansible_user: dotsenkois
+EOT
+
+  depends_on = [
+    yandex_compute_instance.teamcity-master-instance,
+    yandex_compute_instance.teamcity-runner-instance,
+  ]
+}
+
+
+resource "null_resource" "run-ansible-teamcity-inventory" {
+  provisioner "local-exec" {
+    command = "sleep 60 && ANSIBLE_FORCE_COLOR=1 -i ../07.CICD/infrastructure/inventory/cicd/hosts.yml ../07.CICD/infrastructure/site.yml"
+  }
+depends_on = [
+  local_file.teamcity-inventory
+]
+  }
+

@@ -11,3 +11,7 @@ users:
     groups: root, docker
 packages:
   - docker.io
+runcmd:
+  - usermod -a -G docker jenkins
+  - systemctl restart jenkins
+

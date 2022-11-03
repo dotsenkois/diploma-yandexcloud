@@ -80,7 +80,7 @@ EOT
 
 resource "null_resource" "run-ansible" {
   provisioner "local-exec" {
-    command = "sleep 60 && ansible-playbook -i ./ansible/inventory/inventory.yaml ./ansible/site.yaml --private-key ~/.ssh/netology"
+    command = "sleep 60 && ANSIBLE_FORCE_COLOR=1 -i ./ansible/inventory/inventory.yaml ./ansible/site.yaml --private-key ~/.ssh/netology"
   }
 depends_on = [
   local_file.inventory

@@ -78,7 +78,7 @@ locals {
                 core_fraction = "5"
             }
             boot_disk = {
-                image_id = "fd8n2l6igots3v1qfptm"
+                image_id = "fd8f1tik9a7ap9ik2dg1"
                 type     = "network-hdd"
                 size     = "10"
             }
@@ -96,7 +96,7 @@ locals {
                 core_fraction = "5"
             }
             boot_disk = {
-                image_id = "fd8n2l6igots3v1qfptm"
+                image_id = "fd89dsd1oshk57psq3h9"
                 type     = "network-hdd"
                 size     = "10"
             }

@@ -20,7 +20,7 @@ resource "yandex_compute_instance" "gitlab-instance" {
   }
 
   network_interface {
-    subnet_id = yandex_vpc_subnet.jenkins-subnet.id
+    subnet_id = yandex_vpc_subnet.CICD-subnet.id
     ip_address = "192.168.10.151"
     nat       = true
   }
