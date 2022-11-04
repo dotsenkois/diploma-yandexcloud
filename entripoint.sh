@@ -110,7 +110,7 @@ service_folders=(dotsenkois-bucket) # каталог для создания s3,
 # Создать rsa ключ и поменять его в файлах cloud-init.yaml
 ./00.find_and_replace_rsa.sh
 # Получить внешний IP 
-get_my_external_ip
+# get_my_external_ip
 configure_terraform
 00.install_yc
 
