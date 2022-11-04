@@ -55,14 +55,14 @@ locals {
             count = 1
         
             resources = {
-                cores         = "2"
+                cores         = "4"
                 memory        = "4"
-                core_fraction = "5"
+                core_fraction = "20"
             }
             boot_disk = {
                 image_id = "fd8n2l6igots3v1qfptm"
-                type     = "network-hdd"
-                size     = "10"
+                type     = "network-ssd"
+                size     = "15"
             }
             scheduling_policy = {
                 preemptible = "false"
