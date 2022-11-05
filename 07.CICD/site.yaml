@@ -1,0 +1,65 @@
+---
+- name: Install and Configure remote service vm
+  hosts: jenkins
+  tasks:
+    - name: Echo YC_TOKEN
+      ansible.builtin.shell:
+        cmd: "echo $YC_TOKEN"
+      register: YC_TOKEN
+      changed_when: YC_TOKEN.rc != 0
+      delegate_to: localhost
+
+    - name: Echo YC_CLOUD_ID
+      ansible.builtin.shell:
+        cmd: "echo $YC_CLOUD_ID"
+      register: YC_CLOUD_ID
+      changed_when: YC_CLOUD_ID.rc != 0
+      delegate_to: localhost
+
+    - name: Set env YC_CLOUD_ID for YC
+      ansible.builtin.shell:
+        cmd: echo "export YC_CLOUD_ID={{ YC_CLOUD_ID.stdout }}" >> ~/.bashrc && cat ~/.bashrc | grep YC_CLOUD_ID
+      environment:
+        YC_CLOUD_ID: "{{ YC_CLOUD_ID.stdout }}"
+      register: bashrc_YC_CLOUD_ID_added
+      changed_when: "YC_CLOUD_ID.stdout in bashrc_YC_CLOUD_ID_added.stdout"
+
+    - name: Set env YC_TOKEN for YC
+      ansible.builtin.shell:
+        cmd: echo "export YC_TOKEN={{ YC_TOKEN.stdout }}" >> ~/.bashrc && cat ~/.bashrc | grep YC_TOKEN
+      environment:
+        YC_TOKEN: "{{ YC_TOKEN.stdout }}"
+      register: bashrc_YC_TOKEN_added
+      changed_when: "YC_TOKEN.stdout in bashrc_YC_TOKEN_added.stdout"
+
+    - name: Get REGISTRY_ID
+      ansible.builtin.shell:
+        cmd: "cat ../05.docker/registry_id"
+      register: REGISTRY_ID
+      changed_when: REGISTRY_ID.rc != 0
+      delegate_to: localhost
+
+    - name: Set env REGISTRY_ID for Jenkins
+      become: true
+      ansible.builtin.shell:
+        cmd: echo "export REGISTRY_ID={{ REGISTRY_ID.stdout }}" >> /etc/bash.bashrc && cat /etc/bash.bashrc | grep REGISTRY_ID
+      environment:
+        REGISTRY_ID: "{{ REGISTRY_ID.stdout }}"
+      register: bashrc_REGISTRY_ID_added
+      changed_when: "REGISTRY_ID.stdout in bashrc_REGISTRY_ID_added.stdout"
+
+    # - name: Adding jenkins to group sudo
+    #   become: true
+    #   user:
+    #     name: 'jenkins'
+    #     groups: docker
+    #     append: true
+
+    # - name: Login to registry
+    #   become: true
+    #   ansible.builtin.shell:
+    #     cmd: "sudo -u jenkins -s docker login --username oauth --password $YC_TOKEN cr.yandex"
+    #   register: Jenkins_login
+    #   changed_when: " 'Login Succeeded' in Jenkins_login.stdout"
+
+

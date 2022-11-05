@@ -8,14 +8,20 @@ users:
     ssh_authorized_keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3bXWZ0ilGnNS1Q1VMO06WScGKTIDUV0jlIdT88h+rnN3WBayAofWpIT/KViArFRk4/IKkghwPHllos9MF2UPEiUz9qdGjxJdSxey6WWVwCf1GmENQivUBklSZX1MP3SThwFk1TRpWnrW/+od0fpRZbTRJLuLKWUhDacVe7xNTVWp+LhnITKEzkAqOdizkLoXeI2+GkJnrjnkWU0H4yno1US97mFnQh0A/R7Say16Q5KXUtex5caoShOsOeKcGj71OkBoKWRMN5AZ+kvgk+FOJcZ3YF8245dtATmBPejlJsjv4xHaCtg48kJfRKRzcJPZcZOM0hplTkMzcUA2Bav438kDZuTFE8nM2PlDLRuTOdeUHh4+nWxEl3cjzN2+0rh5mRDClQMgnt1oTyCqIASXr5rm6m3NKJrz441SOyi0ZFHt2G7qEJg3GQhNu5OjnSYeDTzK0kC9ztytC/rMyVMmIkz7v4O/4SCQuj0H65uLaVtVKYUj0VKinAS9fm8tFDXE= dotsenkois@dotsenkois-vm
     primary_group: dotsenkois
-    groups: root, docker
+    groups: root, docker, jenkins
   - name: jenkins
     primary_group: jenkins
-    groups: jenkins, docker
-packages:
-  - docker.io
-  - docker-compose
-# runcmd:
-#   - usermod -a -G docker jenkins
-#   - systemctl restart jenkins
+    groups: jenkins, root, docker
+# packages:
+#   - docker.io
+#   - docker-compose
+runcmd:
+  - curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+  - echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]  https://pkg.jenkins.io/debian-stable binary/ | sudo tee  /etc/apt/sources.list.d/jenkins.list > /dev/null
+  - sudo apt-get update
+  - sudo apt-get install openjdk-11-jdk jenkins docker.io docker-compose -y
+  - usermod -a -G docker jenkins
+  - sudo -u jenkins -s if [ ! -f /home/jenkins/.ssh/jenkins_key ]; then ssh-keygen -f /home/jenkins/.ssh/jenkins_key -P ""
+  - sudo -u jenkins -s docker login --username oauth --password $YC_TOKEN cr.yandex
+  - systemctl restart jenkins
 

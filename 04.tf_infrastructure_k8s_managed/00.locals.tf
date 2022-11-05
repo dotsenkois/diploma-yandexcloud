@@ -60,7 +60,7 @@ locals {
                 core_fraction = "20"
             }
             boot_disk = {
-                image_id = "fd8n2l6igots3v1qfptm"
+                image_id = "fd8f1tik9a7ap9ik2dg1"
                 type     = "network-ssd"
                 size     = "15"
             }
