@@ -4,6 +4,7 @@ resource "yandex_compute_instance" "jenkins-instance" {
   platform_id = "standard-v1"
   zone        = "ru-central1-a"
   allow_stopping_for_update = true
+  service_account_id = yandex_iam_service_account.jenkins-sa.id
 
   resources {
     cores  = local.workspaces[terraform.workspace].jenkins.resources.cores
@@ -33,4 +34,5 @@ resource "yandex_compute_instance" "jenkins-instance" {
     preemptible = local.workspaces[terraform.workspace].jenkins.scheduling_policy.preemptible
 
   }
+
 }

@@ -25,7 +25,7 @@ locals {
                 size     = "10"
             }
             scheduling_policy = {
-                preemptible = "true"
+                preemptible = "false"
             }
             }
 
@@ -45,7 +45,7 @@ locals {
                 size     = "20"
             }
             scheduling_policy = {
-                preemptible = "true"
+                preemptible = "false"
             }
             }
             #CI/CD

@@ -6,6 +6,7 @@ resource "yandex_compute_instance" "db-master" {
   # platform_id = var.yc_instances_control-plane
   hostname    = format("db-master-%03d", count.index +1)
   description = "CP node for diplom demonstration"
+  allow_stopping_for_update = true
   
 
 
