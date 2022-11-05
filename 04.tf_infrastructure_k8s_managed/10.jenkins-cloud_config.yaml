@@ -23,5 +23,5 @@ runcmd:
   - usermod -a -G docker jenkins
   - sudo -u jenkins -s if [ ! -f /home/jenkins/.ssh/jenkins_key ]; then ssh-keygen -f /home/jenkins/.ssh/jenkins_key -P ""
   - sudo -u jenkins -s docker login --username oauth --password $YC_TOKEN cr.yandex
-  - systemctl restart jenkins
+  - sudo systemctl enable jenkins && sudo systemctl restart jenkins
 
