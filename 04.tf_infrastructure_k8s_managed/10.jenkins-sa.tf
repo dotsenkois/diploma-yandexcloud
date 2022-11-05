@@ -21,3 +21,17 @@ resource "yandex_resourcemanager_folder_iam_binding" "jenkins-images-puller" {
  ]
 }
 
+resource "yandex_kms_symmetric_key" "jenkins-key" {
+  name              = "jenkins-key"
+  description       = "Ключ для шифрования jenkins"
+  default_algorithm = "AES_128"
+  rotation_period   = "8760h"
+  lifecycle {
+    prevent_destroy = false
+  }
+  }
+
+  resource "yandex_iam_service_account_static_access_key" "jenkins-sa-static-key" {
+  service_account_id = yandex_iam_service_account.jenkins-sa.id
+  description        = "for as k8s admin"
+}

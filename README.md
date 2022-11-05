@@ -29,6 +29,12 @@
 
 ### Создание облачной инфраструктуры
 
+
+
+
+
+Для начала необходимо подготовить облачную инфраструктуру в ЯО при помощи [Terraform](https://www.terraform.io/).
+***
 Подготовлена облачная инфрастукрута в ЯО при помощи Terrafrom и YC:
 - Иденификатор облака указан в переменной YC_CLOUD_ID
 - Токен аутентификации указан в переменной YC_TOKEN
@@ -39,12 +45,10 @@
     - bucket - каталог для хранения состояния terrafrom основной инфраструктуры в s3-хранилище.
     - stage - каталог для предпродуктивной инфрастурктуры. По умолчанию развертывание происходит именно в нём.
     - prod - каталог для продуктивной инфраструктуры. По умолчанию пуст.
+  - В директории [01.tf_cloud_prepare](./01.tf_cloud_prepare) запускается terrafrom, создающий бакет и файл 04.tf_infrastructure_k8s_managed/backend.tf
   - Инициализируется terrafrom в директории с файлами основной инфрастуктуры [04.tf_infrastructure_k8s_managed](./04.tf_infrastructure_k8s_managed), создаются рабочие пространства, и запускается развертывание.
-
-
-
-Для начала необходимо подготовить облачную инфраструктуру в ЯО при помощи [Terraform](https://www.terraform.io/).
-
+  - Создается кластер k8s, Jenkins-инстанс и инстанс с БД для подключения тестового приложения
+***
 
 Особенности выполнения:
 
@@ -54,13 +58,36 @@
 Предварительная подготовка к установке и запуску Kubernetes кластера.
 
 1. Создайте сервисный аккаунт, который будет в дальнейшем использоваться Terraform для работы с инфраструктурой с необходимыми и достаточными правами. Не стоит использовать права суперпользователя
+***
+[04.tf_infrastructure_k8s_managed/03.k8s-sa.tf](./04.tf_infrastructure_k8s_managed/03.k8s-sa.tf)
+
+[04.tf_infrastructure_k8s_managed/10.jenkins-sa.tf](./04.tf_infrastructure_k8s_managed/10.jenkins-sa.tf)
+***
 2. Подготовьте [backend](https://www.terraform.io/docs/language/settings/backends/index.html) для Terraform:  
    а. Рекомендуемый вариант: [Terraform Cloud](https://app.terraform.io/)  
    б. Альтернативный вариант: S3 bucket в созданном ЯО аккаунте
+   ***
+   [01.tf_cloud_prepare/cloud_prepare.tf](./01.tf_cloud_prepare/cloud_prepare.tf)
+   ***
 3. Настройте [workspaces](https://www.terraform.io/docs/language/state/workspaces.html)  
    а. Рекомендуемый вариант: создайте два workspace: *stage* и *prod*. В случае выбора этого варианта все последующие шаги должны учитывать факт существования нескольких workspace.  
+   ***
+   [entripoint.sh](./entripoint.sh) function 04.tf_infrastructure()
+   ***
    б. Альтернативный вариант: используйте один workspace, назвав его *stage*. Пожалуйста, не используйте workspace, создаваемый Terraform-ом по-умолчанию (*default*).
 4. Создайте VPC с подсетями в разных зонах доступности.
+***
+   [04.tf_infrastructure_k8s_managed/00.ipcalc.txt](./04.tf_infrastructure_k8s_managed/00.ipcalc.txt)
+
+   [04.tf_infrastructure_k8s_managed/00.network.tf](./04.tf_infrastructure_k8s_managed/00.network.tf)
+
+   [04.tf_infrastructure_k8s_managed/03.k8s-subnets.tf](./04.tf_infrastructure_k8s_managed/03.k8s-subnets.tf)
+   
+   [04.tf_infrastructure_k8s_managed/02.db-subnet.tf](./04.tf_infrastructure_k8s_managed/02.db-subnet.tf)
+   
+   [04.tf_infrastructure_k8s_managed/10.CICD-subnet.tf](./04.tf_infrastructure_k8s_managed/10.CICD-subnet.tf)
+
+***
 5. Убедитесь, что теперь вы можете выполнить команды `terraform destroy` и `terraform apply` без дополнительных ручных действий.
 6. В случае использования [Terraform Cloud](https://app.terraform.io/) в качестве [backend](https://www.terraform.io/docs/language/settings/backends/index.html) убедитесь, что применение изменений успешно проходит, используя web-интерфейс Terraform cloud.
 
@@ -83,12 +110,34 @@
 2. Альтернативный вариант: воспользуйтесь сервисом [Yandex Managed Service for Kubernetes](https://cloud.yandex.ru/services/managed-kubernetes)  
   а. С помощью terraform resource для [kubernetes](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/kubernetes_cluster) создать региональный мастер kubernetes с размещением нод в разных 3 подсетях      
   б. С помощью terraform resource для [kubernetes node group](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/kubernetes_node_group)
+  ***
+   [04.tf_infrastructure_k8s_managed/03.k8s-subnets.tf](./04.tf_infrastructure_k8s_managed/03.k8s-subnets.tf)
+
+   [04.tf_infrastructure_k8s_managed/03.k8s-cluster.tf](./04.tf_infrastructure_k8s_managed/03.k8s-cluster.tf)
+
+   [04.tf_infrastructure_k8s_managed/03.k8s-config.tf](./04.tf_infrastructure_k8s_managed/03.k8s-config.tf)
+
+   [04.tf_infrastructure_k8s_managed/03.k8s-key.tf](./04.tf_infrastructure_k8s_managed/03.k8s-key.tf)
+   
+   [04.tf_infrastructure_k8s_managed/03.k8s-node-group.tf](./04.tf_infrastructure_k8s_managed/03.k8s-node-group.tf)
+
+   [04.tf_infrastructure_k8s_managed/03.k8s-sa.tf](./04.tf_infrastructure_k8s_managed/03.k8s-sa.tf)
+
+  ***
   
 Ожидаемый результат:
 
 1. Работоспособный Kubernetes кластер.
 2. В файле `~/.kube/config` находятся данные для доступа к кластеру.
+***
+[.kuber]([./.kuber)
+***
 3. Команда `kubectl get pods --all-namespaces` отрабатывает без ошибок.
+***
+[04.tf_infrastructure_k8s_managed/03.k8s-config.tf](./04.tf_infrastructure_k8s_managed/03.k8s-config.tf)
+
+[.kuber/get-staticconfig.sh](./.kuber/get-staticconfig.sh)
+***
 
 ---
 ### Создание тестового приложения
@@ -100,6 +149,9 @@
 1. Рекомендуемый вариант:  
    а. Создайте отдельный git репозиторий с простым nginx конфигом, который будет отдавать статические данные.  
    б. Подготовьте Dockerfile для создания образа приложения.  
+   ***
+   [diploma-web-app](https://github.com/dotsenkois/diploma-web-app)
+   ***
 2. Альтернативный вариант:  
    а. Используйте любой другой код, главное, чтобы был самостоятельно создан Dockerfile.
 
@@ -107,6 +159,8 @@
 
 1. Git репозиторий с тестовым приложением и Dockerfile.
 2. Регистр с собранным docker image. В качестве регистра может быть DockerHub или [Yandex Container Registry](https://cloud.yandex.ru/services/container-registry), созданный также с помощью terraform.
+***
+***
 
 ---
 ### Подготовка cистемы мониторинга и деплой приложения
@@ -117,7 +171,9 @@
 Цель:
 1. Задеплоить в кластер [prometheus](https://prometheus.io/), [grafana](https://grafana.com/), [alertmanager](https://github.com/prometheus/alertmanager), [экспортер](https://github.com/prometheus/node_exporter) основных метрик Kubernetes.
 2. Задеплоить тестовое приложение, например, [nginx](https://www.nginx.com/) сервер отдающий статическую страницу.
+***
 
+***
 Рекомендуемый способ выполнения:
 1. Воспользовать пакетом [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus), который уже включает в себя [Kubernetes оператор](https://operatorhub.io/) для [grafana](https://grafana.com/), [prometheus](https://prometheus.io/), [alertmanager](https://github.com/prometheus/alertmanager) и [node_exporter](https://github.com/prometheus/node_exporter). При желании можете собрать все эти приложения отдельно.
 2. Для организации конфигурации использовать [qbec](https://qbec.io/), основанный на [jsonnet](https://jsonnet.org/). Обратите внимание на имеющиеся функции для интеграции helm конфигов и [helm charts](https://helm.sh/)
@@ -129,8 +185,18 @@
 Ожидаемый результат:
 1. Git репозиторий с конфигурационными файлами для настройки Kubernetes.
 2. Http доступ к web интерфейсу grafana.
+***
+[grafana.dotsenkois.ru](http://grafana.dotsenkois.ru/login)
+***
 3. Дашборды в grafana отображающие состояние Kubernetes кластера.
+***
+[99.images/grafana-dasboards.png](./99.images/grafana-dasboards.png)
+***
+
 4. Http доступ к тестовому приложению.
+***
+[dotsenkois.ru](http://dotsenkois.ru/)
+***
 
 ---
 ### Установка и настройка CI/CD
