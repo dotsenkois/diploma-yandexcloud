@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: cr.yandex/crpf83jkr9h92qmose30/diploma-web-app_frontend:0.1.1
+        image: cr.yandex/crpqtuoe9d7fs206oic7/diploma-web-app_frontend:0.1.1
         ports:
         - containerPort: 8080
         resources:

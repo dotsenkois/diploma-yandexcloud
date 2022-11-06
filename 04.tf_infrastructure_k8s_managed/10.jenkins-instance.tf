@@ -34,6 +34,9 @@ resource "yandex_compute_instance" "jenkins-instance" {
     preemptible = local.workspaces[terraform.workspace].jenkins.scheduling_policy.preemptible
 
   }
+  depends_on = [
+    yandex_container_registry.my-reg,
+  ]
 
 }
 

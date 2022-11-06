@@ -1,0 +1,13 @@
+---
+all:
+  hosts:
+    jenkins:
+      ansible_host: 84.201.156.236
+
+  vars:
+    ansible_connection_type: paramiko
+    ansible_user: dotsenkois
+
+jenkins-master:
+  hosts:
+    jenkins:

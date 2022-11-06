@@ -184,6 +184,9 @@
 
 Ожидаемый результат:
 1. Git репозиторий с конфигурационными файлами для настройки Kubernetes.
+***
+[06.k8s](./06.k8s)
+***
 2. Http доступ к web интерфейсу grafana.
 ***
 [grafana.dotsenkois.ru](http://grafana.dotsenkois.ru/login)

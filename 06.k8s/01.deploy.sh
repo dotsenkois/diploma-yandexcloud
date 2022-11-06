@@ -1,4 +1,8 @@
 #!/bin/bash
+function helm_init(){
+  if [ ! -f /usr/local/bin/helm ]; then curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash; fi
+
+}
 function autocomplition(){
 alias k=kubectl
 source <( kubectl completion bash | sed s/kubectl/k/g )
@@ -17,6 +21,8 @@ kubectl create namespace monitoring
 
 # Add prometheus-community repo
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add jenkins https://charts.jenkins.io
+
 
 # Update helm repo
 helm repo update
@@ -35,13 +41,16 @@ function deploy_web-app(){
     kubectl apply -f web-app/ds.backend.yaml
     kubectl apply -f web-app/ds.frontend.yaml
 }
-
-
+function jenkins(){
+kubectl create ns jenkins
+helm install --name jenkins --namespace jenkins -f jenkins/demo-values.yaml stable/jenkins
+}
 
 function main(){
 autocomplition
 deploy_web-app
 deploy_monitoring
+jenkins
 }
 
 main

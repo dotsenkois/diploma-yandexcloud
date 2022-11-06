@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: cr.yandex/crpf83jkr9h92qmose30/diploma-web-app_backend:0.1.1
+          image: cr.yandex/crpqtuoe9d7fs206oic7/diploma-web-app_backend:0.1.1
           ports:
           - containerPort: 8000
           env:
