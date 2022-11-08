@@ -242,7 +242,9 @@
 4. Репозиторий с Dockerfile тестового приложения и ссылка на собранный docker image.
 ***
 [diploma-web-app](https://github.com/dotsenkois/diploma-web-app)
+
 [diploma-web-app_backend](https://hub.docker.com/repository/docker/dotsenkois/diploma-web-app_backend)
+
 [diploma-web-app_frontend](https://hub.docker.com/repository/docker/dotsenkois/diploma-web-app_frontend)
 
 ***
@@ -253,12 +255,14 @@
 6. Ссылка на тестовое приложение и веб интерфейс Grafana с данными доступа.
 ***
 [Приложение](http://dotsenkois.ru/)
+
 [grafana](http://grafana.dotsenkois.ru/login)
-[jenkins](http://jenkins.dotsenkois.ru/login?from=%2F)
+
 ***
 7. Все репозитории рекомендуется хранить на одном ресурсе (github, gitlab)
 ***
 [diploma-web-app](https://github.com/dotsenkois/diploma-web-app)
+
 [diploma-yandexcloud](https://github.com/dotsenkois/diploma-yandexcloud)
 ***
 
