@@ -228,12 +228,39 @@
 ## Что необходимо для сдачи задания?
 
 1. Репозиторий с конфигурационными файлами Terraform и готовность продемонстрировать создание всех ресурсов с нуля.
+***
+[04.tf_infrastructure_k8s_managed](./04.tf_infrastructure_k8s_managed)
+***
 2. Пример pull request с комментариями созданными atlantis'ом или снимки экрана из Terraform Cloud.
+***
+Не испоьзуется
+***
 3. Репозиторий с конфигурацией ansible, если был выбран способ создания Kubernetes кластера при помощи ansible.
+***
+Испольуется Managed Kubernetes kluster
+***
 4. Репозиторий с Dockerfile тестового приложения и ссылка на собранный docker image.
+***
+[diploma-web-app](https://github.com/dotsenkois/diploma-web-app)
+[diploma-web-app_backend](https://hub.docker.com/repository/docker/dotsenkois/diploma-web-app_backend)
+[diploma-web-app_frontend](https://hub.docker.com/repository/docker/dotsenkois/diploma-web-app_frontend)
+
+***
 5. Репозиторий с конфигурацией Kubernetes кластера.
+***
+[06.k8s](./06.k8s)
+***
 6. Ссылка на тестовое приложение и веб интерфейс Grafana с данными доступа.
+***
+[Приложение](http://dotsenkois.ru/)
+[grafana](http://grafana.dotsenkois.ru/login)
+[jenkins](http://jenkins.dotsenkois.ru/login?from=%2F)
+***
 7. Все репозитории рекомендуется хранить на одном ресурсе (github, gitlab)
+***
+[diploma-web-app](https://github.com/dotsenkois/diploma-web-app)
+[diploma-yandexcloud](https://github.com/dotsenkois/diploma-yandexcloud)
+***
 
 ---
 ## Как правильно задавать вопросы дипломному руководителю?

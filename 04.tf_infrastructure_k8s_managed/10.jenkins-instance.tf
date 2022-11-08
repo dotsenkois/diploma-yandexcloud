@@ -69,7 +69,9 @@ resource "null_resource" "jenkins-instance-run-ansible" {
     command = "sleep 60 && ANSIBLE_FORCE_COLOR=1 ansible-playbook -i ../07.CICD/inventory.yaml ../07.CICD/site.yaml --private-key ~/.ssh/netology"
   }
 depends_on = [
-  local_file.jenkins-instance-inventory
+  local_file.jenkins-instance-inventory,
+  yandex_kubernetes_node_group.k8s-netology-node-group,
+  yandex_container_registry.my-reg,
 ]
   }
 

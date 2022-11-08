@@ -42,8 +42,8 @@ function deploy_web-app(){
     kubectl apply -f web-app/ds.frontend.yaml
 }
 function jenkins(){
-# kubectl create ns jenkins
-# helm install --name jenkins --namespace jenkins -f jenkins/demo-values.yaml stable/jenkins
+kubectl create ns jenkins
+helm install --name jenkins --namespace jenkins -f jenkins/demo-values.yaml stable/jenkins
 }
 
 function main(){

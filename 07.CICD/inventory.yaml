@@ -2,7 +2,7 @@
 all:
   hosts:
     jenkins:
-      ansible_host: 84.201.156.236
+      ansible_host: 130.193.50.79
 
   vars:
     ansible_connection_type: paramiko

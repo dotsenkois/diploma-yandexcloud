@@ -55,9 +55,9 @@ locals {
             count = 1
         
             resources = {
-                cores         = "4"
+                cores         = "2"
                 memory        = "4"
-                core_fraction = "20"
+                core_fraction = "5"
             }
             boot_disk = {
                 image_id = "fd8f1tik9a7ap9ik2dg1"
