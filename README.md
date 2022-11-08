@@ -29,10 +29,6 @@
 
 ### Создание облачной инфраструктуры
 
-
-
-
-
 Для начала необходимо подготовить облачную инфраструктуру в ЯО при помощи [Terraform](https://www.terraform.io/).
 ***
 Подготовлена облачная инфрастукрута в ЯО при помощи Terrafrom и YC:
@@ -158,8 +154,17 @@
 Ожидаемый результат:
 
 1. Git репозиторий с тестовым приложением и Dockerfile.
+***
+[diploma-web-app](https://github.com/dotsenkois/diploma-web-app)
+***
 2. Регистр с собранным docker image. В качестве регистра может быть DockerHub или [Yandex Container Registry](https://cloud.yandex.ru/services/container-registry), созданный также с помощью terraform.
 ***
+[registry.png](./99.images/registry.png)
+
+[06.docker-registry.tf](./04.tf_infrastructure_k8s_managed/06.docker-registry.tf)
+
+[registry.png](./99.images/jenkins-pipeline.png)
+
 ***
 
 ---
@@ -172,7 +177,7 @@
 1. Задеплоить в кластер [prometheus](https://prometheus.io/), [grafana](https://grafana.com/), [alertmanager](https://github.com/prometheus/alertmanager), [экспортер](https://github.com/prometheus/node_exporter) основных метрик Kubernetes.
 2. Задеплоить тестовое приложение, например, [nginx](https://www.nginx.com/) сервер отдающий статическую страницу.
 ***
-
+[dotsenkois.ru](http://dotsenkois.ru)
 ***
 Рекомендуемый способ выполнения:
 1. Воспользовать пакетом [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus), который уже включает в себя [Kubernetes оператор](https://operatorhub.io/) для [grafana](https://grafana.com/), [prometheus](https://prometheus.io/), [alertmanager](https://github.com/prometheus/alertmanager) и [node_exporter](https://github.com/prometheus/node_exporter). При желании можете собрать все эти приложения отдельно.
