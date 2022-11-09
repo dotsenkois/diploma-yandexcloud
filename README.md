@@ -220,6 +220,7 @@
 ***
 2. Автоматический деплой нового docker образа.
 ***
+
 ***
 
 Можно использовать [teamcity](https://www.jetbrains.com/ru-ru/teamcity/), [jenkins](https://www.jenkins.io/) либо [gitlab ci](https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/)
